@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CardSet {
 	
@@ -87,6 +88,22 @@ public class CardSet {
 	
 	public String getCategory() {
 		return category;
+	}
+	
+	public Card getCard(int i) {
+		return cards.get(i);
+	}
+	
+	public void addCard(Card card) {
+		cards.add(card);
+	}
+	
+	public void shuffleCards() {
+		Collections.shuffle(cards);
+	}
+	
+	public void removeCard(Card card) {
+		cards.remove(card);
 	}
 
 }
