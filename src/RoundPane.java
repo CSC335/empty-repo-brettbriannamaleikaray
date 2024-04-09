@@ -141,140 +141,117 @@ public class RoundPane extends Application {
 
 	private void setMouseHandler() {
 		pane.setOnMouseClicked(event -> {
-			makeGuess(event);
-			checkCards();
+
+			if (firstGuess) {
+				firstGuess = false;
+				firstX = event.getX();
+				firstY = event.getY();
+
+				// row one
+				if (firstY >= 41 && firstY <= 233) {
+					rowOne = 1;
+					// cardOne
+					if (firstX >= 12 && firstX <= 145) {
+						colOne = 0;
+						clickedCardOne = deck.getCard(0);
+						// cardTwo
+					} else if (firstX >= 166 && firstX <= 299) {
+						colOne = 1;
+						clickedCardOne = deck.getCard(1);
+						// cardThree
+					} else if (firstX >= 328 && firstX <= 464) {
+						colOne = 2;
+						clickedCardOne = deck.getCard(2);
+						// cardFour
+					} else if (firstX >= 489 && firstX <= 625) {
+						colOne = 3;
+						clickedCardOne = deck.getCard(3);
+					}
+				}
+
+				// row two
+				if (firstY >= 251 && firstY <= 440) {
+					rowOne = 2;
+					// cardFive
+					if (firstX >= 12 && firstX <= 145) {
+						colOne = 0;
+						clickedCardOne = deck.getCard(4);
+						// cardSix
+					} else if (firstX >= 166 && firstX <= 300) {
+						colOne = 1;
+						clickedCardOne = deck.getCard(5);
+						// cardSeven
+					} else if (firstX >= 326 && firstX <= 464) {
+						colOne = 2;
+						clickedCardOne = deck.getCard(6);
+						// cardEight
+					} else if (firstX >= 485 && firstX <= 625) {
+						colOne = 3;
+						clickedCardOne = deck.getCard(7);
+					}
+				}
+
+				// row three
+				if (firstY >= 460 && firstY <= 652) {
+					rowOne = 3;
+					// cardNine
+					if (firstX >= 12 && firstX <= 145) {
+						clickedCardOne = deck.getCard(8);
+						colOne = 0;
+						// cardTen
+					} else if (firstX >= 166 && firstX <= 300) {
+						clickedCardOne = deck.getCard(9);
+						colOne = 1;
+						// cardEleven
+					} else if (firstX >= 326 && firstX <= 464) {
+						colOne = 2;
+						clickedCardOne = deck.getCard(10);
+						// cardTwelve
+					} else if (firstX >= 485 && firstX <= 625) {
+						colOne = 3;
+						clickedCardOne = deck.getCard(11);
+					}
+
+				}
+
+				// row four
+				if (firstY >= 669 && firstY <= 864) {
+					rowOne = 4;
+					// cardThirteen
+					if (firstX >= 12 && firstX <= 145) {
+						colOne = 0;
+						clickedCardOne = deck.getCard(12);
+						// cardFourteen
+					} else if (firstX >= 166 && firstX <= 300) {
+						colOne = 1;
+						clickedCardOne = deck.getCard(13);
+						// cardFifteen
+					} else if (firstX >= 326 && firstX <= 464) {
+						colOne = 2;
+						clickedCardOne = deck.getCard(14);
+						// cardSixteen
+					} else if (firstX >= 485 && firstX <= 625) {
+						colOne = 3;
+						clickedCardOne = deck.getCard(15);
+					}
+				}
+
+				pane.add(new ImageView(new Image(clickedCardOne.getFileName(), 150, 200, false, false)), colOne,
+						rowOne);
+			} else {
+				firstGuess = true;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				checkCards();
+			}
+
 		});
 
-	}
+		pane.setOnMousePressed(event -> {
 
-	private void checkCards() {
-		
-		if (!clickedCardOne.equals(nullCard) && !clickedCardTwo.equals(nullCard)) {
-
-			// see if cards match
-			if (clickedCardOne.getName().equals(clickedCardTwo.getName())) {
-				Rectangle rectOne = new Rectangle();
-				rectOne.setWidth(150);
-				rectOne.setHeight(200);
-				rectOne.setFill(Color.WHITE);
-
-				Rectangle rectTwo = new Rectangle();
-				rectTwo.setWidth(150);
-				rectTwo.setHeight(200);
-				rectTwo.setFill(Color.WHITE);
-
-				pane.add(rectOne, colOne, rowOne);
-				pane.add(rectTwo, colTwo, rowTwo);
-				clickedCardOne = nullCard;
-				clickedCardTwo = nullCard;
-
-			} else {
-				pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), colOne, rowOne);
-				pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), colTwo, rowTwo);
-				clickedCardOne = nullCard;
-				clickedCardTwo = nullCard;
-			}
-		}
-	}
-
-	private void makeGuess(MouseEvent event) {
-		if (firstGuess) {
-			firstGuess = false;
-			firstX = event.getX();
-			firstY = event.getY();
-
-			// row one
-			if (firstY >= 41 && firstY <= 233) {
-				rowOne = 1;
-				// cardOne
-				if (firstX >= 12 && firstX <= 145) {
-					colOne = 0;
-					clickedCardOne = deck.getCard(0);
-					// cardTwo
-				} else if (firstX >= 166 && firstX <= 299) {
-					colOne = 1;
-					clickedCardOne = deck.getCard(1);
-					// cardThree
-				} else if (firstX >= 328 && firstX <= 464) {
-					colOne = 2;
-					clickedCardOne = deck.getCard(2);
-					// cardFour
-				} else if (firstX >= 489 && firstX <= 625) {
-					colOne = 3;
-					clickedCardOne = deck.getCard(3);
-				}
-			}
-
-			// row two
-			if (firstY >= 251 && firstY <= 440) {
-				rowOne = 2;
-				// cardFive
-				if (firstX >= 12 && firstX <= 145) {
-					colOne = 0;
-					clickedCardOne = deck.getCard(4);
-					// cardSix
-				} else if (firstX >= 166 && firstX <= 300) {
-					colOne = 1;
-					clickedCardOne = deck.getCard(5);
-					// cardSeven
-				} else if (firstX >= 326 && firstX <= 464) {
-					colOne = 2;
-					clickedCardOne = deck.getCard(6);
-					// cardEight
-				} else if (firstX >= 485 && firstX <= 625) {
-					colOne = 3;
-					clickedCardOne = deck.getCard(7);
-				}
-			}
-
-			// row three
-			if (firstY >= 460 && firstY <= 652) {
-				rowOne = 3;
-				// cardNine
-				if (firstX >= 12 && firstX <= 145) {
-					clickedCardOne = deck.getCard(8);
-					// cardTen
-				} else if (firstX >= 166 && firstX <= 300) {
-					clickedCardOne = deck.getCard(9);
-					// cardEleven
-				} else if (firstX >= 326 && firstX <= 464) {
-					colOne = 2;
-					clickedCardOne = deck.getCard(10);
-					// cardTwelve
-				} else if (firstX >= 485 && firstX <= 625) {
-					colOne = 3;
-					clickedCardOne = deck.getCard(11);
-				}
-
-			}
-
-			// row four
-			if (firstY >= 669 && firstY <= 864) {
-				rowOne = 4;
-				// cardThirteen
-				if (firstX >= 12 && firstX <= 145) {
-					colOne = 0;
-					clickedCardOne = deck.getCard(12);
-					// cardFourteen
-				} else if (firstX >= 166 && firstX <= 300) {
-					colOne = 1;
-					clickedCardOne = deck.getCard(13);
-					// cardFifteen
-				} else if (firstX >= 326 && firstX <= 464) {
-					colOne = 2;
-					clickedCardOne = deck.getCard(14);
-					// cardSixteen
-				} else if (firstX >= 485 && firstX <= 625) {
-					colOne = 3;
-					clickedCardOne = deck.getCard(15);
-				}
-			}
-
-			pane.add(new ImageView(new Image(clickedCardOne.getFileName(), 150, 200, false, false)), colOne, rowOne);
-
-			// second card
-		} else {
-			firstGuess = true;
 			secondX = event.getX();
 			secondY = event.getY();
 
@@ -368,8 +345,40 @@ public class RoundPane extends Application {
 			}
 
 			pane.add(new ImageView(new Image(clickedCardTwo.getFileName(), 150, 200, false, false)), colTwo, rowTwo);
-		}
+
+		});
 
 	}
+
+	private void checkCards() {
+
+		if (!clickedCardOne.equals(nullCard) && !clickedCardTwo.equals(nullCard)) {
+
+			// see if cards match
+			if (clickedCardOne.getName().equals(clickedCardTwo.getName())) {
+				Rectangle rectOne = new Rectangle();
+				rectOne.setWidth(150);
+				rectOne.setHeight(200);
+				rectOne.setFill(Color.WHITE);
+
+				Rectangle rectTwo = new Rectangle();
+				rectTwo.setWidth(150);
+				rectTwo.setHeight(200);
+				rectTwo.setFill(Color.WHITE);
+
+				pane.add(rectOne, colOne, rowOne);
+				pane.add(rectTwo, colTwo, rowTwo);
+				clickedCardOne = nullCard;
+				clickedCardTwo = nullCard;
+
+			} else {
+				pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), colOne, rowOne);
+				pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), colTwo, rowTwo);
+				clickedCardOne = nullCard;
+				clickedCardTwo = nullCard;
+			}
+		}
+	}
+
 
 }
