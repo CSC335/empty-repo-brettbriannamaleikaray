@@ -1,3 +1,4 @@
+package model;
 /**
  * A single guess consists of the positions of the first and second cards.
  * 

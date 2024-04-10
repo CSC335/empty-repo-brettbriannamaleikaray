@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.Card;
+import model.Round;
 
 public class RoundPane extends Application {
 

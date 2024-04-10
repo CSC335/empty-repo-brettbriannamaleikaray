@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.Card;
+import model.CardSet;
 
 public class RoundPaneWithTextAndBG extends Application {
 
