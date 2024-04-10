@@ -9,11 +9,8 @@ import java.util.HashSet;
  */
 public class Round {
 
-	private CardSet notMatched;
-	private CardSet matched;
 	private Table table;
 	private ArrayList<Guess> guessHistory;
-	private HashSet<String> seenNames;
 	private boolean isActive;
 	private int numOfMatches;
 	private int numOfPairs;
@@ -47,6 +44,7 @@ public class Round {
 		}
 		if (numOfMatches == numOfPairs) {
 			isActive = false;
+			calculateScore();
 		}
 	}
 
@@ -78,6 +76,12 @@ public class Round {
 	 * https://math.stackexchange.com/questions/1877355/how-many-turns-on-average-does-it-take-for-a-perfect-player-to-win-concentrati
 	 */
 	private void calculateScore() {
+		// Currently the score is just the accuracy of guesses
 		score = numOfMatches / guessHistory.size();
 	}
+	
+	public double getScore() {
+		return score;
+	}
+	
 }
