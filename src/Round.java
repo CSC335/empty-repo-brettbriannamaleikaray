@@ -9,11 +9,8 @@ import java.util.HashSet;
  */
 public class Round {
 
-	private CardSet notMatched;
-	private CardSet matched;
 	private Table table;
 	private ArrayList<Guess> guessHistory;
-	private HashSet<String> seenNames;
 	private boolean isActive;
 	private int numOfMatches;
 	private int numOfPairs;
@@ -32,6 +29,16 @@ public class Round {
 		isActive = true;
 		guessHistory = new ArrayList<Guess>();
 	}
+	
+	/**
+	 * Get the card at position i.
+	 * 
+	 * @param i: integer index in [0, 2*numOfPairs)
+	 * @return the card at position i
+	 */
+	public Card getCard(int i) {
+		return table.getCard(i);
+	}
 
 	/**
 	 * Remember to invoke this method whenever the player makes a guess!
@@ -47,6 +54,7 @@ public class Round {
 		}
 		if (numOfMatches == numOfPairs) {
 			isActive = false;
+			calculateScore();
 		}
 	}
 
@@ -79,5 +87,15 @@ public class Round {
 	 */
 	private void calculateScore() {
 		score = numOfMatches / guessHistory.size();
+	}
+	
+	/**
+	 * Returns the final score.
+	 * 
+	 * @return 0 if score has not been calculated, otherwise returns the score
+	 * after calculateScore has been invoked
+	 */
+	public double getScore() {
+		return score;
 	}
 }

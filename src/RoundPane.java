@@ -34,8 +34,9 @@ public class RoundPane extends Application {
 	private int colTwo;
 	private boolean firstGuess = true;
 
-	private CardSet deck;
+//	private CardSet deck;
 	private String cardBackPath;
+	private Round curRound;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -64,42 +65,37 @@ public class RoundPane extends Application {
 
 	private void chooseDeck() {
 		cacti.setOnAction(event -> {
-			deck = new CardSet("cacti");
+			curRound = new Round("cacti", 8);
 			cardBackPath = "file:src/images/cardbacks/cardback_cacti.png";
 			makeFullDeck();
 		});
 
 		cities.setOnAction(event -> {
-			deck = new CardSet("cities");
+			curRound = new Round("cities", 8);
 			cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
 			makeFullDeck();
 		});
 
 		mammals.setOnAction(event -> {
-			deck = new CardSet("mammals");
+			curRound = new Round("mammals", 8);
 			cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 			makeFullDeck();
 		});
 
 		mountains.setOnAction(event -> {
-			deck = new CardSet("mountains");
+			curRound = new Round("mountains", 8);
 			cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
 			makeFullDeck();
 		});
 
 		reptiles.setOnAction(event -> {
-			deck = new CardSet("reptiles");
+			curRound = new Round("reptiles", 8);
 			cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
 			makeFullDeck();
 		});
 	}
 
 	private void makeFullDeck() {
-		for (int i = 0; i < 8; i++) {
-			Card currentCard = deck.getCard(i);
-			deck.addCard(currentCard);
-		}
-		deck.shuffleCards();
 
 		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), 0, 1);
 		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), 1, 1);
@@ -121,22 +117,22 @@ public class RoundPane extends Application {
 		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), 2, 4);
 		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)), 3, 4);
 
-		Image cardOneBack = new Image(deck.getCard(0).getFileName(), 150, 200, false, false);
-		Image cardTwoBack = new Image(deck.getCard(1).getFileName(), 150, 200, false, false);
-		Image cardThreeBack = new Image(deck.getCard(2).getFileName(), 150, 200, false, false);
-		Image cardFourBack = new Image(deck.getCard(3).getFileName(), 150, 200, false, false);
-		Image cardFiveBack = new Image(deck.getCard(4).getFileName(), 150, 200, false, false);
-		Image cardSixBack = new Image(deck.getCard(5).getFileName(), 150, 200, false, false);
-		Image cardSevenBack = new Image(deck.getCard(6).getFileName(), 150, 200, false, false);
-		Image cardEightBack = new Image(deck.getCard(7).getFileName(), 150, 200, false, false);
-		Image cardNineBack = new Image(deck.getCard(8).getFileName(), 150, 200, false, false);
-		Image cardTenBack = new Image(deck.getCard(9).getFileName(), 150, 200, false, false);
-		Image cardElevenBack = new Image(deck.getCard(10).getFileName(), 150, 200, false, false);
-		Image cardTwelveBack = new Image(deck.getCard(11).getFileName(), 150, 200, false, false);
-		Image cardThirteenBack = new Image(deck.getCard(12).getFileName(), 150, 200, false, false);
-		Image cardFourteenBack = new Image(deck.getCard(13).getFileName(), 150, 200, false, false);
-		Image cardFifteenBack = new Image(deck.getCard(14).getFileName(), 150, 200, false, false);
-		Image cardSixteenBack = new Image(deck.getCard(15).getFileName(), 150, 200, false, false);
+		Image cardOneBack = new Image(curRound.getCard(0).getFileName(), 150, 200, false, false);
+		Image cardTwoBack = new Image(curRound.getCard(1).getFileName(), 150, 200, false, false);
+		Image cardThreeBack = new Image(curRound.getCard(2).getFileName(), 150, 200, false, false);
+		Image cardFourBack = new Image(curRound.getCard(3).getFileName(), 150, 200, false, false);
+		Image cardFiveBack = new Image(curRound.getCard(4).getFileName(), 150, 200, false, false);
+		Image cardSixBack = new Image(curRound.getCard(5).getFileName(), 150, 200, false, false);
+		Image cardSevenBack = new Image(curRound.getCard(6).getFileName(), 150, 200, false, false);
+		Image cardEightBack = new Image(curRound.getCard(7).getFileName(), 150, 200, false, false);
+		Image cardNineBack = new Image(curRound.getCard(8).getFileName(), 150, 200, false, false);
+		Image cardTenBack = new Image(curRound.getCard(9).getFileName(), 150, 200, false, false);
+		Image cardElevenBack = new Image(curRound.getCard(10).getFileName(), 150, 200, false, false);
+		Image cardTwelveBack = new Image(curRound.getCard(11).getFileName(), 150, 200, false, false);
+		Image cardThirteenBack = new Image(curRound.getCard(12).getFileName(), 150, 200, false, false);
+		Image cardFourteenBack = new Image(curRound.getCard(13).getFileName(), 150, 200, false, false);
+		Image cardFifteenBack = new Image(curRound.getCard(14).getFileName(), 150, 200, false, false);
+		Image cardSixteenBack = new Image(curRound.getCard(15).getFileName(), 150, 200, false, false);
 	}
 
 	private void setMouseHandler() {
@@ -153,19 +149,19 @@ public class RoundPane extends Application {
 					// cardOne
 					if (firstX >= 12 && firstX <= 145) {
 						colOne = 0;
-						clickedCardOne = deck.getCard(0);
+						clickedCardOne = curRound.getCard(0);
 						// cardTwo
 					} else if (firstX >= 166 && firstX <= 299) {
 						colOne = 1;
-						clickedCardOne = deck.getCard(1);
+						clickedCardOne = curRound.getCard(1);
 						// cardThree
 					} else if (firstX >= 328 && firstX <= 464) {
 						colOne = 2;
-						clickedCardOne = deck.getCard(2);
+						clickedCardOne = curRound.getCard(2);
 						// cardFour
 					} else if (firstX >= 489 && firstX <= 625) {
 						colOne = 3;
-						clickedCardOne = deck.getCard(3);
+						clickedCardOne = curRound.getCard(3);
 					}
 				}
 
@@ -175,19 +171,19 @@ public class RoundPane extends Application {
 					// cardFive
 					if (firstX >= 12 && firstX <= 145) {
 						colOne = 0;
-						clickedCardOne = deck.getCard(4);
+						clickedCardOne = curRound.getCard(4);
 						// cardSix
 					} else if (firstX >= 166 && firstX <= 300) {
 						colOne = 1;
-						clickedCardOne = deck.getCard(5);
+						clickedCardOne = curRound.getCard(5);
 						// cardSeven
 					} else if (firstX >= 326 && firstX <= 464) {
 						colOne = 2;
-						clickedCardOne = deck.getCard(6);
+						clickedCardOne = curRound.getCard(6);
 						// cardEight
 					} else if (firstX >= 485 && firstX <= 625) {
 						colOne = 3;
-						clickedCardOne = deck.getCard(7);
+						clickedCardOne = curRound.getCard(7);
 					}
 				}
 
@@ -196,20 +192,20 @@ public class RoundPane extends Application {
 					rowOne = 3;
 					// cardNine
 					if (firstX >= 12 && firstX <= 145) {
-						clickedCardOne = deck.getCard(8);
+						clickedCardOne = curRound.getCard(8);
 						colOne = 0;
 						// cardTen
 					} else if (firstX >= 166 && firstX <= 300) {
-						clickedCardOne = deck.getCard(9);
+						clickedCardOne = curRound.getCard(9);
 						colOne = 1;
 						// cardEleven
 					} else if (firstX >= 326 && firstX <= 464) {
 						colOne = 2;
-						clickedCardOne = deck.getCard(10);
+						clickedCardOne = curRound.getCard(10);
 						// cardTwelve
 					} else if (firstX >= 485 && firstX <= 625) {
 						colOne = 3;
-						clickedCardOne = deck.getCard(11);
+						clickedCardOne = curRound.getCard(11);
 					}
 
 				}
@@ -220,19 +216,19 @@ public class RoundPane extends Application {
 					// cardThirteen
 					if (firstX >= 12 && firstX <= 145) {
 						colOne = 0;
-						clickedCardOne = deck.getCard(12);
+						clickedCardOne = curRound.getCard(12);
 						// cardFourteen
 					} else if (firstX >= 166 && firstX <= 300) {
 						colOne = 1;
-						clickedCardOne = deck.getCard(13);
+						clickedCardOne = curRound.getCard(13);
 						// cardFifteen
 					} else if (firstX >= 326 && firstX <= 464) {
 						colOne = 2;
-						clickedCardOne = deck.getCard(14);
+						clickedCardOne = curRound.getCard(14);
 						// cardSixteen
 					} else if (firstX >= 485 && firstX <= 625) {
 						colOne = 3;
-						clickedCardOne = deck.getCard(15);
+						clickedCardOne = curRound.getCard(15);
 					}
 				}
 
@@ -261,19 +257,19 @@ public class RoundPane extends Application {
 				// cardOne
 				if (secondX >= 12 && secondX <= 145) {
 					colTwo = 0;
-					clickedCardTwo = deck.getCard(0);
+					clickedCardTwo = curRound.getCard(0);
 					// cardTwo
 				} else if (secondX >= 166 && secondX <= 299) {
 					colTwo = 1;
-					clickedCardTwo = deck.getCard(1);
+					clickedCardTwo = curRound.getCard(1);
 					// cardThree
 				} else if (secondX >= 328 && secondX <= 464) {
 					colTwo = 2;
-					clickedCardTwo = deck.getCard(2);
+					clickedCardTwo = curRound.getCard(2);
 					// cardFour
 				} else if (secondX >= 489 && secondX <= 625) {
 					colTwo = 3;
-					clickedCardTwo = deck.getCard(3);
+					clickedCardTwo = curRound.getCard(3);
 				}
 			}
 
@@ -283,19 +279,19 @@ public class RoundPane extends Application {
 				// cardFive
 				if (secondX >= 12 && secondX <= 145) {
 					colTwo = 0;
-					clickedCardTwo = deck.getCard(4);
+					clickedCardTwo = curRound.getCard(4);
 					// cardSix
 				} else if (secondX >= 166 && secondX <= 300) {
 					colTwo = 1;
-					clickedCardTwo = deck.getCard(5);
+					clickedCardTwo = curRound.getCard(5);
 					// cardSeven
 				} else if (secondX >= 326 && secondX <= 464) {
 					colTwo = 2;
-					clickedCardTwo = deck.getCard(6);
+					clickedCardTwo = curRound.getCard(6);
 					// cardEight
 				} else if (secondX >= 485 && secondX <= 625) {
 					colTwo = 3;
-					clickedCardTwo = deck.getCard(7);
+					clickedCardTwo = curRound.getCard(7);
 				}
 			}
 
@@ -305,19 +301,19 @@ public class RoundPane extends Application {
 				// cardNine
 				if (secondX >= 12 && secondX <= 145) {
 					colTwo = 0;
-					clickedCardTwo = deck.getCard(8);
+					clickedCardTwo = curRound.getCard(8);
 					// cardTen
 				} else if (secondX >= 166 && secondX <= 300) {
 					colTwo = 1;
-					clickedCardTwo = deck.getCard(9);
+					clickedCardTwo = curRound.getCard(9);
 					// cardEleven
 				} else if (secondX >= 326 && secondX <= 464) {
 					colTwo = 2;
-					clickedCardTwo = deck.getCard(10);
+					clickedCardTwo = curRound.getCard(10);
 					// cardTwelve
 				} else if (secondX >= 485 && secondX <= 625) {
 					colTwo = 3;
-					clickedCardTwo = deck.getCard(11);
+					clickedCardTwo = curRound.getCard(11);
 				}
 
 			}
@@ -328,19 +324,19 @@ public class RoundPane extends Application {
 				// cardThirteen
 				if (secondX >= 12 && secondX <= 145) {
 					colTwo = 0;
-					clickedCardTwo = deck.getCard(12);
+					clickedCardTwo = curRound.getCard(12);
 					// cardFourteen
 				} else if (secondX >= 166 && secondX <= 300) {
 					colTwo = 1;
-					clickedCardTwo = deck.getCard(13);
+					clickedCardTwo = curRound.getCard(13);
 					// cardFifteen
 				} else if (secondX >= 326 && secondX <= 464) {
 					colTwo = 2;
-					clickedCardTwo = deck.getCard(14);
+					clickedCardTwo = curRound.getCard(14);
 					// cardSixteen
 				} else if (secondX >= 485 && secondX <= 625) {
 					colTwo = 3;
-					clickedCardTwo = deck.getCard(15);
+					clickedCardTwo = curRound.getCard(15);
 				}
 			}
 
