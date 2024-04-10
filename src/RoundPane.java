@@ -183,8 +183,12 @@ public class RoundPane extends Application {
 				rowOne = clickRow;
 				colOne = clickCol;
 				guessPos1 = guessPos;
+				if (clickedCardOne != null && guessPos1 >= 0) {
 				pane.add(new ImageView(new Image(clickedCardOne.getFileName(),
 						150, 200, false, false)), clickCol, clickRow);
+				} else {
+					firstGuess = true;
+				}
 			} else {
 				firstGuess = true;
 				try {
@@ -203,8 +207,11 @@ public class RoundPane extends Application {
 			rowTwo = clickRow;
 			colTwo = clickCol;
 			guessPos2 = guessPos;
+			
+			if (clickedCardTwo != null && clickedCardTwo != clickedCardOne && guessPos2 >= 0) {
 			pane.add(new ImageView(new Image(clickedCardTwo.getFileName(), 150,
 					200, false, false)), clickCol, clickRow);
+			}
 		});
 
 	}
@@ -238,10 +245,8 @@ public class RoundPane extends Application {
 				clickedCard = curRound.getCard(3);
 				guessPos = 3;
 			}
-		}
-
-		// row two
-		if (clickY >= 251 && clickY <= 440) {
+		// row two	
+		} else if (clickY >= 251 && clickY <= 440) {
 			clickRow = 2;
 			// cardFive
 			if (clickX >= 12 && clickX <= 145) {
@@ -264,10 +269,8 @@ public class RoundPane extends Application {
 				clickedCard = curRound.getCard(7);
 				guessPos = 7;
 			}
-		}
-
-		// row three
-		if (clickY >= 460 && clickY <= 652) {
+		// row three	
+		} else if (clickY >= 460 && clickY <= 652) {
 			clickRow = 3;
 			// cardNine
 			if (clickX >= 12 && clickX <= 145) {
@@ -291,10 +294,8 @@ public class RoundPane extends Application {
 				guessPos = 11;
 			}
 
-		}
-
-		// row four
-		if (clickY >= 669 && clickY <= 864) {
+		// row four	
+		} else if (clickY >= 669 && clickY <= 864) {
 			clickRow = 4;
 			// cardThirteen
 			if (clickX >= 12 && clickX <= 145) {
@@ -317,6 +318,9 @@ public class RoundPane extends Application {
 				clickedCard = curRound.getCard(15);
 				guessPos = 15;
 			}
+		} else {
+			guessPos = -1;
+			return null;
 		}
 
 		return clickedCard;
