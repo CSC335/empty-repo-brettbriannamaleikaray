@@ -328,7 +328,6 @@ public class RoundPane extends Application {
 			if (!clickedCardOne.equals(nullCard)
 					&& !clickedCardTwo.equals(nullCard)) {
 				curRound.makeGuess(guessPos1, guessPos2);
-				System.out.println(curRound.numOfMatches());
 				// see if cards match
 				if (clickedCardOne.getName().equals(clickedCardTwo.getName())) {
 					Rectangle rectOne = new Rectangle();
@@ -357,7 +356,9 @@ public class RoundPane extends Application {
 					clickedCardTwo = nullCard;
 				}
 			}
-		} else {
+		}
+
+		if(!curRound.isActive()) {
 			String score = curRound.getScore().toString();
 			System.out.println("Game finished");
 			scoreMsg = new Label("Your score: " + score);

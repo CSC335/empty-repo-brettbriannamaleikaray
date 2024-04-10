@@ -53,6 +53,12 @@ public class Round {
 		if (isMatch(guess)) {
 			numOfMatches++;
 		}
+		System.out.println(numOfMatches + " " + numOfPairs);
+		if (numOfMatches == numOfPairs) {
+			System.out.println("isActive false");
+			isActive = false;
+			calculateScore();
+		}
 	}
 
 	/**
@@ -64,10 +70,6 @@ public class Round {
 	private boolean isMatch(Guess guess) {
 		Card firstCard = table.getCard(guess.first());
 		Card secondCard = table.getCard(guess.second());
-		if (numOfMatches == numOfPairs) {
-			isActive = false;
-			calculateScore();
-		}
 		return firstCard.getName() == secondCard.getName();
 	}
 
