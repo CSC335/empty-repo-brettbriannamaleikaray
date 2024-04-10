@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * This class represents a round of memory match. It keeps track of the guesses
@@ -14,7 +13,7 @@ public class Round {
 	private boolean isActive;
 	private int numOfMatches;
 	private int numOfPairs;
-	private double score;
+	private Double score;
 
 	/**
 	 * Initialize a round of memory match by choosing a category and the number
@@ -26,6 +25,7 @@ public class Round {
 	public Round(String category, int numOfPairs) {
 		this.numOfPairs = numOfPairs;
 		table = new Table(category, numOfPairs);
+		System.out.println(numOfPairs);
 		isActive = true;
 		guessHistory = new ArrayList<Guess>();
 	}
@@ -52,10 +52,6 @@ public class Round {
 		if (isMatch(guess)) {
 			numOfMatches++;
 		}
-		if (numOfMatches == numOfPairs) {
-			isActive = false;
-			calculateScore();
-		}
 	}
 
 	/**
@@ -67,6 +63,10 @@ public class Round {
 	private boolean isMatch(Guess guess) {
 		Card firstCard = table.getCard(guess.first());
 		Card secondCard = table.getCard(guess.second());
+		if (numOfMatches == numOfPairs) {
+			isActive = false;
+			calculateScore();
+		}
 		return firstCard.getName() == secondCard.getName();
 	}
 
@@ -86,7 +86,7 @@ public class Round {
 	 * https://math.stackexchange.com/questions/1877355/how-many-turns-on-average-does-it-take-for-a-perfect-player-to-win-concentrati
 	 */
 	private void calculateScore() {
-		score = numOfMatches / guessHistory.size();
+		score = (double) (numOfMatches / guessHistory.size());
 	}
 	
 	/**
@@ -95,7 +95,11 @@ public class Round {
 	 * @return 0 if score has not been calculated, otherwise returns the score
 	 * after calculateScore has been invoked
 	 */
-	public double getScore() {
+	public Double getScore() {
 		return score;
+	}
+	
+	public int numOfMatches() {
+		return numOfMatches;
 	}
 }
