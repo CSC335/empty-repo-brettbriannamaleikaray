@@ -44,6 +44,10 @@ public class Table {
 		return randomizedCards;
 	}
 	
+	public Card getCard(int index) {
+		return randomizedCards[index];
+	}
+	
 	public String getCategory() {
 		return category;
 	}
