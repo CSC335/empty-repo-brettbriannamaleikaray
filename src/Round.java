@@ -28,6 +28,7 @@ public class Round {
 		System.out.println(numOfPairs);
 		isActive = true;
 		guessHistory = new ArrayList<Guess>();
+		score = 0.0;
 	}
 	
 	/**
