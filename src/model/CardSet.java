@@ -25,14 +25,14 @@ public class CardSet {
 
 	private void setCactiCards() {
 		String basePath = "file:src/images/cards/cacti/";
-		cards.add(new Card("apache hedgehog cactus", basePath + "cacti_apachehedgehogcactus.png"));
-		cards.add(new Card("barrel cactus", basePath + "cacti_barrelcactus.png"));
-		cards.add(new Card("jumping cholla", basePath + "cacti_jumpingcholla.png"));
-		cards.add(new Card("organ cactus", basePath + "cacti_organcactus.png"));
-		cards.add(new Card("pincushion cactus", basePath + "cacti_pincushioncactus.png"));
-		cards.add(new Card("prickly pear", basePath + "cacti_pricklypear.png"));
-		cards.add(new Card("saguaro", basePath + "cacti_saguaro.png"));
-		cards.add(new Card("teddy bear cholla", basePath + "cacti_teddybearcholla.png"));
+		cards.add(new Card("Apache Hedgehog Cactus", basePath + "cacti_apachehedgehogcactus.png"));
+		cards.add(new Card("Barrel Cactus", basePath + "cacti_barrelcactus.png"));
+		cards.add(new Card("Jumping Cholla", basePath + "cacti_jumpingcholla.png"));
+		cards.add(new Card("Organ Cactus", basePath + "cacti_organcactus.png"));
+		cards.add(new Card("Pincushion Cactus", basePath + "cacti_pincushioncactus.png"));
+		cards.add(new Card("Prickly Pear", basePath + "cacti_pricklypear.png"));
+		cards.add(new Card("Saguaro", basePath + "cacti_saguaro.png"));
+		cards.add(new Card("Teddy Bear Cholla", basePath + "cacti_teddybearcholla.png"));
 	}
 	
 	private void setCitiesCards() {
@@ -49,14 +49,14 @@ public class CardSet {
 	
 	private void setMammalsCards() {
 		String basePath = "file:src/images/cards/mammals/";
-		cards.add(new Card("antelope jackrabbit", basePath + "mammals_antelopejackrabbit.png"));
-		cards.add(new Card("black bear", basePath + "mammals_blackbear.png"));
-		cards.add(new Card("coyote", basePath + "mammals_coyote.png"));
-		cards.add(new Card("javelina", basePath + "mammals_javelina.png"));
-		cards.add(new Card("lesser long-nosed bat", basePath + "mammals_lesserlongnosedbat.png"));
-		cards.add(new Card("mountain lion", basePath + "mammals_mountainlion.png"));
-		cards.add(new Card("mule deer", basePath + "mammals_muledeer.png"));
-		cards.add(new Card("white-nosed coati", basePath + "mammals_whitenosedcoati.png"));
+		cards.add(new Card("Antelope Jackrabbit", basePath + "mammals_antelopejackrabbit.png"));
+		cards.add(new Card("Black Bear", basePath + "mammals_blackbear.png"));
+		cards.add(new Card("Coyote", basePath + "mammals_coyote.png"));
+		cards.add(new Card("Javelina", basePath + "mammals_javelina.png"));
+		cards.add(new Card("Lesser Long-nosed Bat", basePath + "mammals_lesserlongnosedbat.png"));
+		cards.add(new Card("Mountain Lion", basePath + "mammals_mountainlion.png"));
+		cards.add(new Card("Mule Deer", basePath + "mammals_muledeer.png"));
+		cards.add(new Card("white-nosed Coati", basePath + "mammals_whitenosedcoati.png"));
 	}
 	
 	private void setMountainsCards() {
@@ -73,14 +73,14 @@ public class CardSet {
 	
 	private void setReptilesCards() {
 		String basePath = "file:src/images/cards/reptiles/";
-		cards.add(new Card("desert iguana", basePath + "reptiles_desertiguana.png"));
-		cards.add(new Card("gila monster", basePath + "reptiles_gilamonster.png"));
-		cards.add(new Card("greater short-horned lizard", basePath + "reptiles_greatershorthornedlizard.png"));
-		cards.add(new Card("ornate tree lizard", basePath + "reptiles_ornatetreelizard.png"));
-		cards.add(new Card("regal horned lizard", basePath + "reptiles_regalhornedlizard.png"));
-		cards.add(new Card("sidewinder", basePath + "reptiles_sidewinder.png"));
-		cards.add(new Card("sonoran collared lizard", basePath + "reptiles_sonorancollaredlizard.png"));
-		cards.add(new Card("western diamondback rattlesnake", basePath + "reptiles_westerndiamondbackrattlesnake.png"));
+		cards.add(new Card("Desert Iguana", basePath + "reptiles_desertiguana.png"));
+		cards.add(new Card("Gila Monster", basePath + "reptiles_gilamonster.png"));
+		cards.add(new Card("Greater Short-horned Lizard", basePath + "reptiles_greatershorthornedlizard.png"));
+		cards.add(new Card("Ornate Tree Lizard", basePath + "reptiles_ornatetreelizard.png"));
+		cards.add(new Card("Regal Horned Lizard", basePath + "reptiles_regalhornedlizard.png"));
+		cards.add(new Card("Sidewinder", basePath + "reptiles_sidewinder.png"));
+		cards.add(new Card("Sonoran Collared Lizard", basePath + "reptiles_sonorancollaredlizard.png"));
+		cards.add(new Card("Western Diamondback Rattlesnake", basePath + "reptiles_westerndiamondbackrattlesnake.png"));
 	}
 	
 	public ArrayList<Card> getCards() {

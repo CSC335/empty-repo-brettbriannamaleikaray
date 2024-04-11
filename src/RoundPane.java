@@ -2,6 +2,10 @@
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Card;
 import model.Round;
@@ -42,6 +47,7 @@ public class RoundPane extends Application {
 	private int guessPos1;
 	private int guessPos2;
 	private boolean firstGuess = true;
+	private Label[] textLabels = new Label[16];
 
 //	private CardSet deck;
 	private String cardBackPath;
@@ -59,7 +65,9 @@ public class RoundPane extends Application {
 		Scene scene = new Scene(pane, 1000, 1000);
 		stage.setScene(scene);
 		stage.show();
-
+		
+		// Load CSS for text labels
+				scene.getStylesheets().addAll(getClass().getResource("TextOutline.css").toExternalForm());
 	}
 
 	private void layoutGUI() {
@@ -70,6 +78,9 @@ public class RoundPane extends Application {
 		pane.add(mammals, 2, 0);
 		pane.add(mountains, 3, 0);
 		pane.add(reptiles, 4, 0);
+		
+		// Set background image
+        pane.setStyle("-fx-background-image: url('file:src/images/desertbackground.jpg')");
 	}
 
 	private void chooseDeck() {
@@ -174,6 +185,9 @@ public class RoundPane extends Application {
 				150, 200, false, false);
 		Image cardSixteenBack = new Image(curRound.getCard(15).getFileName(),
 				150, 200, false, false);
+		
+		for(int i = 0; i < 16; i += 1)
+			textLabels[i] = getCardTextLabel(curRound.getCard(i).getName(), 150, 200);
 	}
 
 	private void setMouseHandler() {
@@ -188,6 +202,7 @@ public class RoundPane extends Application {
 				if (clickedCardOne != null && guessPos1 >= 0) {
 				pane.add(new ImageView(new Image(clickedCardOne.getFileName(),
 						150, 200, false, false)), clickCol, clickRow);
+				pane.add(textLabels[(clickRow-1) * 4 + clickCol], clickCol, clickRow);
 				} else {
 					firstGuess = true;
 				}
@@ -205,14 +220,17 @@ public class RoundPane extends Application {
 
 		pane.setOnMousePressed(event -> {
 
-			clickedCardTwo = getClickedCard(event);
-			rowTwo = clickRow;
-			colTwo = clickCol;
-			guessPos2 = guessPos;
-			
-			if (clickedCardTwo != null && clickedCardTwo != clickedCardOne && guessPos2 >= 0) {
-			pane.add(new ImageView(new Image(clickedCardTwo.getFileName(), 150,
-					200, false, false)), clickCol, clickRow);
+			if(!firstGuess) {
+				clickedCardTwo = getClickedCard(event);
+				rowTwo = clickRow;
+				colTwo = clickCol;
+				guessPos2 = guessPos;
+				
+				if (clickedCardTwo != null && clickedCardTwo != clickedCardOne && guessPos2 >= 0) {
+					pane.add(new ImageView(new Image(clickedCardTwo.getFileName(), 150,
+							200, false, false)), clickCol, clickRow);
+					pane.add(textLabels[(clickRow-1) * 4 + clickCol], clickCol, clickRow);
+				}
 			}
 		});
 
@@ -350,6 +368,8 @@ public class RoundPane extends Application {
 					pane.add(rectTwo, colTwo, rowTwo);
 					clickedCardOne = nullCard;
 					clickedCardTwo = nullCard;
+					pane.getChildren().remove(textLabels[(rowOne-1) * 4 + colOne]);
+					pane.getChildren().remove(textLabels[(rowTwo-1) * 4 + colTwo]);
 
 				} else {
 					pane.add(new ImageView(
@@ -360,6 +380,8 @@ public class RoundPane extends Application {
 							colTwo, rowTwo);
 					clickedCardOne = nullCard;
 					clickedCardTwo = nullCard;
+					pane.getChildren().remove(textLabels[(rowOne-1) * 4 + colOne]);
+					pane.getChildren().remove(textLabels[(rowTwo-1) * 4 + colTwo]);
 				}
 			}
 		}
@@ -371,5 +393,41 @@ public class RoundPane extends Application {
 			pane.add(scoreMsg, 0, 4);
 		}
 	}
+	
+	/**
+	 * Creates and returns a Label with outlined text of the card name
+	 * @param cardName is the name of the card
+	 * @param cardWidth is the width of the card in pixels
+	 * @param cardHeight is the height of the card in pixels
+	 * @return a label with outlined text of the card's name.
+	 */
+	private Label getCardTextLabel(String cardName, double cardWidth, double cardHeight) {
+		// Dimensions of card image files
+		final double CARD_IMAGE_WIDTH = 202;
+		final double CARD_IMAGE_HEIGHT = 275;
 
+		// Dimensions cards will be drawn at (if you change this you'll need to change
+		// the font size in TextOutline.css.)
+		final double drawnCardWidth = cardWidth;
+		final double drawnCardHeight = cardHeight;
+
+		// Scale of card vs. image (so we can scale drawing coordinates below)
+		double xScale = drawnCardWidth / CARD_IMAGE_WIDTH;
+		double yScale = drawnCardHeight / CARD_IMAGE_HEIGHT;
+
+		// Text
+		Label cardText = new Label(cardName);
+		cardText.setTextAlignment(TextAlignment.CENTER);
+		cardText.setAlignment(Pos.BOTTOM_CENTER);
+		cardText.setLineSpacing(-9 * yScale);
+
+		// Align text at 15% from bottom of card
+		GridPane.setHalignment(cardText, HPos.CENTER);
+		GridPane.setValignment(cardText, VPos.BOTTOM);
+		cardText.setPadding(new Insets(0, 0, drawnCardHeight * 0.15 * yScale, 0));
+		cardText.setWrapText(true);
+		cardText.setPrefWidth(145 * xScale);
+		
+		return cardText;
+	}
 }
