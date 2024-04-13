@@ -1,0 +1,32 @@
+.root {
+	-fx-font-family: "Helvetica";
+	-fx-font-size: 28px;
+}
+
+.table-view {
+	-fx-background-color: transparent;
+}
+
+.table-view .column-header-background .filler {
+	-fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+	-fx-background-color: linear-gradient(to bottom, #fff8e9, #ecfff0);
+}
+
+.table-view .column-header {
+	-fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+	-fx-border-color: transparent;
+}
+
+.table-row-cell: odd{
+	-fx-background-color: #fff8e9;
+}
+
+.table-row-cell: even{
+	-fx-background-color: #ecfff0;
+}

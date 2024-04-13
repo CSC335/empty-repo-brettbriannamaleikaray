@@ -1,0 +1,9 @@
+.label .text {
+	-fx-font-size: 14px;
+	-fx-font-family: helvetica-bold;
+	-fx-font-weight: bold;
+	-fx-fill: white;
+	-fx-stroke: black;
+	-fx-stroke-width: 3;
+	-fx-stroke-type: OUTSIDE;
+}
