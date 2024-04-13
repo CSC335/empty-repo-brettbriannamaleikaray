@@ -21,9 +21,8 @@ import javafx.stage.Stage;
 import model.Card;
 import model.Round;
 
-public class RoundPane extends Application {
+public class RoundPane extends GridPane {
 
-	private GridPane pane = new GridPane();
 	private Button cacti = new Button("cacti");
 	private Button cities = new Button("cities");
 	private Button mammals = new Button("mammals");
@@ -52,35 +51,29 @@ public class RoundPane extends Application {
 //	private CardSet deck;
 	private String cardBackPath;
 	private Round curRound;
+	private MemoryGameGUI memoryGame;
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage stage) throws Exception {
+	public RoundPane(MemoryGameGUI memoryGame) {
+		this.memoryGame = memoryGame;
 		chooseDeck();
 		layoutGUI();
 		setMouseHandler();
-		Scene scene = new Scene(pane, 1000, 1000);
-		stage.setScene(scene);
-		stage.show();
 		
 		// Load CSS for text labels
-				scene.getStylesheets().addAll(getClass().getResource("TextOutline.css").toExternalForm());
+		this.getStylesheets().addAll(getClass().getResource("TextOutline.css").toExternalForm());
 	}
 
 	private void layoutGUI() {
-		pane.setHgap(10);
-		pane.setVgap(10);
-		pane.add(cacti, 0, 0);
-		pane.add(cities, 1, 0);
-		pane.add(mammals, 2, 0);
-		pane.add(mountains, 3, 0);
-		pane.add(reptiles, 4, 0);
+		this.setHgap(10);
+		this.setVgap(10);
+		this.add(cacti, 0, 0);
+		this.add(cities, 1, 0);
+		this.add(mammals, 2, 0);
+		this.add(mountains, 3, 0);
+		this.add(reptiles, 4, 0);
 		
 		// Set background image
-        pane.setStyle("-fx-background-image: url('file:src/images/desertbackground.jpg')");
+		this.setStyle("-fx-background-image: url('file:src/images/desertbackground.jpg')");
 	}
 
 	private void chooseDeck() {
@@ -117,40 +110,40 @@ public class RoundPane extends Application {
 
 	private void makeFullDeck() {
 
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				0, 1);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				1, 1);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				2, 1);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				3, 1);
 
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				0, 2);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				1, 2);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				2, 2);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				3, 2);
 
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				0, 3);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				1, 3);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				2, 3);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				3, 3);
 
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				0, 4);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				1, 4);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				2, 4);
-		pane.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
+		this.add(new ImageView(new Image(cardBackPath, 150, 200, false, false)),
 				3, 4);
 
 		Image cardOneBack = new Image(curRound.getCard(0).getFileName(), 150,
@@ -191,7 +184,7 @@ public class RoundPane extends Application {
 	}
 
 	private void setMouseHandler() {
-		pane.setOnMouseClicked(event -> {
+		this.setOnMouseClicked(event -> {
 
 			if (firstGuess) {
 				firstGuess = false;
@@ -200,9 +193,9 @@ public class RoundPane extends Application {
 				colOne = clickCol;
 				guessPos1 = guessPos;
 				if (clickedCardOne != null && guessPos1 >= 0) {
-				pane.add(new ImageView(new Image(clickedCardOne.getFileName(),
+					this.add(new ImageView(new Image(clickedCardOne.getFileName(),
 						150, 200, false, false)), clickCol, clickRow);
-				pane.add(textLabels[(clickRow-1) * 4 + clickCol], clickCol, clickRow);
+				this.add(textLabels[(clickRow-1) * 4 + clickCol], clickCol, clickRow);
 				} else {
 					firstGuess = true;
 				}
@@ -218,7 +211,7 @@ public class RoundPane extends Application {
 
 		});
 
-		pane.setOnMousePressed(event -> {
+		this.setOnMousePressed(event -> {
 
 			if(!firstGuess) {
 				clickedCardTwo = getClickedCard(event);
@@ -227,9 +220,9 @@ public class RoundPane extends Application {
 				guessPos2 = guessPos;
 				
 				if (clickedCardTwo != null && clickedCardTwo != clickedCardOne && guessPos2 >= 0) {
-					pane.add(new ImageView(new Image(clickedCardTwo.getFileName(), 150,
+					this.add(new ImageView(new Image(clickedCardTwo.getFileName(), 150,
 							200, false, false)), clickCol, clickRow);
-					pane.add(textLabels[(clickRow-1) * 4 + clickCol], clickCol, clickRow);
+					this.add(textLabels[(clickRow-1) * 4 + clickCol], clickCol, clickRow);
 				}
 			}
 		});
@@ -364,24 +357,24 @@ public class RoundPane extends Application {
 					rectTwo.setHeight(200);
 					rectTwo.setFill(Color.WHITE);
 
-					pane.add(rectOne, colOne, rowOne);
-					pane.add(rectTwo, colTwo, rowTwo);
+					this.add(rectOne, colOne, rowOne);
+					this.add(rectTwo, colTwo, rowTwo);
 					clickedCardOne = nullCard;
 					clickedCardTwo = nullCard;
-					pane.getChildren().remove(textLabels[(rowOne-1) * 4 + colOne]);
-					pane.getChildren().remove(textLabels[(rowTwo-1) * 4 + colTwo]);
+					this.getChildren().remove(textLabels[(rowOne-1) * 4 + colOne]);
+					this.getChildren().remove(textLabels[(rowTwo-1) * 4 + colTwo]);
 
 				} else {
-					pane.add(new ImageView(
+					this.add(new ImageView(
 							new Image(cardBackPath, 150, 200, false, false)),
 							colOne, rowOne);
-					pane.add(new ImageView(
+					this.add(new ImageView(
 							new Image(cardBackPath, 150, 200, false, false)),
 							colTwo, rowTwo);
 					clickedCardOne = nullCard;
 					clickedCardTwo = nullCard;
-					pane.getChildren().remove(textLabels[(rowOne-1) * 4 + colOne]);
-					pane.getChildren().remove(textLabels[(rowTwo-1) * 4 + colTwo]);
+					this.getChildren().remove(textLabels[(rowOne-1) * 4 + colOne]);
+					this.getChildren().remove(textLabels[(rowTwo-1) * 4 + colTwo]);
 				}
 			}
 		}
@@ -390,7 +383,7 @@ public class RoundPane extends Application {
 			String score = curRound.getScore().toString();
 			System.out.println("Game finished");
 			scoreMsg = new Label("Your score: " + score);
-			pane.add(scoreMsg, 0, 4);
+			this.add(scoreMsg, 0, 4);
 		}
 	}
 	
