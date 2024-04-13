@@ -44,12 +44,12 @@ public class LeaderboardPane extends Application {
 		TableColumn lowestScoreColumn = new TableColumn<MockUserAccount, String>("Lowest Score");
 		lowestScoreColumn.setCellValueFactory(new PropertyValueFactory<MockUserAccount, String>("lowestScore"));
 
-		TableColumn winPercentageColumn = new TableColumn<MockUserAccount, String>("Win Percentage");
-		winPercentageColumn.setCellValueFactory(new PropertyValueFactory<MockUserAccount, String>("winPercentage"));
+		TableColumn averageScoreColumn = new TableColumn<MockUserAccount, String>("Average Score");
+		averageScoreColumn.setCellValueFactory(new PropertyValueFactory<MockUserAccount, String>("averageScore"));
 
 		leaderboardTable.getColumns().add(userNameColumn);
 		leaderboardTable.getColumns().add(lowestScoreColumn);
-		leaderboardTable.getColumns().add(winPercentageColumn);
+		leaderboardTable.getColumns().add(averageScoreColumn);
 
 		leaderboardTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		leaderboardTable.setSelectionModel(null);

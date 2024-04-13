@@ -7,24 +7,19 @@ public class MockUserAccount {
 	private double lowestScore;
 	private double roundsPlayed;
 	private double totalWins;
-	private String winPercentage;
-
-	public MockUserAccount() {
-		userName = "Test Account " + random.nextInt(9999);
-		lowestScore = 5 + random.nextInt(15);
-		roundsPlayed = 15 + random.nextInt(30);
-		totalWins = 0 + random.nextInt(15);
-		winPercentage = (int) Math.round((totalWins / roundsPlayed) * 100) + "%";
-		//winPercentage = winPercentage / 100;
-	}
+	private double averageScore;
+	private int sumOfAllScores;
 	
 	public MockUserAccount(String argUserName) {
 		userName = argUserName;
 		lowestScore = 5 + random.nextInt(15);
 		roundsPlayed = 15 + random.nextInt(30);
 		totalWins = 0 + random.nextInt(15);
-		winPercentage = (int) Math.round((totalWins / roundsPlayed) * 100) + "%";
-		//winPercentage = winPercentage / 100;
+		sumOfAllScores = 100 + random.nextInt(80);
+		averageScore = Math.round((sumOfAllScores / roundsPlayed) * 100) / 100;
+		
+		averageScore = Math.round((sumOfAllScores / roundsPlayed) * 100);
+		averageScore = averageScore / 100;
 	}
 
 	public Random getRandom() {
@@ -67,12 +62,12 @@ public class MockUserAccount {
 		this.totalWins = totalWins;
 	}
 
-	public String getWinPercentage() {
-		return winPercentage;
+	public double getAverageScore() {
+		return averageScore;
 	}
 
-	public void setWinPercentage(String winPercentage) {
-		this.winPercentage = winPercentage;
+	public void setWinPercentage(double averageScore) {
+		this.averageScore = averageScore;
 	}
 	
 }
