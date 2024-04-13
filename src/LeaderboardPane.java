@@ -7,30 +7,22 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class LeaderboardPane extends Application {
-	private BorderPane pane = new BorderPane();
-
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage stage) throws Exception {
-		layoutGUI();
-
-		// Set scene
-		Scene scene = new Scene(pane, 1000, 1000);
-		scene.getStylesheets().add("LeaderboardStyle.css");
-		stage.setScene(scene);
-		stage.show();
-	}
+public class LeaderboardPane extends BorderPane {
 	
+	private MemoryGameGUI memoryGame;
+
+	public LeaderboardPane(MemoryGameGUI memoryGame) {
+		this.memoryGame = memoryGame;
+		layoutGUI();
+		this.getStylesheets().add("LeaderboardStyle.css");
+	}
+
 	private void layoutGUI() {
 		// Generate leaderboard table and add to pane
-		pane.setCenter(generateTable());
+		this.setCenter(generateTable());
 		
 		// Set background image
-        pane.setStyle("-fx-background-image: url('file:src/images/leaderboardbackground.jpg')");
+		this.setStyle("-fx-background-image: url('file:src/images/leaderboardbackground.jpg')");
 	}
 
 	private TableView generateTable() {
