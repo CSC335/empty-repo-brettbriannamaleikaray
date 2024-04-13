@@ -10,10 +10,12 @@ public class MemoryGameGUI extends Application {
 	}
 	
 	private BorderPane pane = new BorderPane();
+	private TitlePane titlePane;
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		pane.setCenter(new TitlePane(this));
+		titlePane = new TitlePane(this);
+		pane.setCenter(titlePane);
 		Scene scene = new Scene(pane, 1000, 1000);
 		stage.setScene(scene);
 		stage.show();
@@ -29,5 +31,9 @@ public class MemoryGameGUI extends Application {
 	
 	public void startRound() {
 		pane.setCenter(new RoundPane(this));
+	}
+	
+	public void showTitlePane() {
+		pane.setCenter(titlePane);
 	}
 }
