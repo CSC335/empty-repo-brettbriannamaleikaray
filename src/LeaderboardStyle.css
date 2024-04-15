@@ -5,6 +5,7 @@
 
 .table-view {
 	-fx-background-color: transparent;
+	-fx-font-size:15.0;
 }
 
 .table-view .column-header-background .filler {
@@ -19,14 +20,25 @@
 	-fx-background-color: transparent;
 }
 
+// Below may be unnecessary
 .table-view .table-cell{
 	-fx-border-color: transparent;
 }
 
+.table-row-cell: even{
+	-fx-background-color: #ecfff0;
+	-fx-font-size:15.0;
+}
+
 .table-row-cell: odd{
+	-fx-background-color: #fff8e9;
+	-fx-font-size:15.0;
+}
+
+.list-view .list-cell: odd{
 	-fx-background-color: #fff8e9;
 }
 
-.table-row-cell: even{
+.list-view .list-cell: even{
 	-fx-background-color: #ecfff0;
 }
