@@ -22,14 +22,15 @@ import javafx.stage.Stage;
 import model.Card;
 import model.Round;
 
+/**
+ *  Starts a new Round of the Memory Game. It first shows 5
+ *  card backs that represent a different theme. Once a card back
+ *  is chosen a new deck is shown and the game begins. As the game
+ *  is played the number of guesses and a score is kept. Once all 
+ *  the card pairs have been found the round ends.
+ */
 public class RoundPane extends GridPane {
-
-	/*
-	 * private Button cacti = new Button("cacti"); private Button cities = new
-	 * Button("cities"); private Button mammals = new Button("mammals"); private
-	 * Button mountains = new Button("mountains"); private Button reptiles = new
-	 * Button("reptiles");
-	 */
+	
 	private Card nullCard = new Card("null", "null");
 	private Label scoreMsg;
 	private Card clickedCardOne = nullCard;
@@ -63,10 +64,15 @@ public class RoundPane extends GridPane {
 	private String cardBackPath;
 	private Round curRound;
 	private MemoryGameGUI memoryGame;
-
+	
+	
+	/** 
+	 *  Constructs a new RoundPane
+	 * 
+	 * @param memoryGame The MemoryGameGUI object that controls the GUI
+	 */
 	public RoundPane(MemoryGameGUI memoryGame) {
 		this.memoryGame = memoryGame;
-		// chooseDeck();
 		layoutGUI();
 		setMouseHandler();
 
@@ -158,31 +164,9 @@ public class RoundPane extends GridPane {
 
 	}
 
-	/*
-	 * private void chooseDeck() { cacti.setOnAction(event -> { curRound = new
-	 * Round("cacti", 8); cardBackPath =
-	 * "file:src/images/cardbacks/cardback_cacti.png"; makeFullDeck(); });
-	 * 
-	 * cities.setOnAction(event -> { curRound = new Round("cities", 8); cardBackPath
-	 * = "file:src/images/cardbacks/cardback_cities.png"; makeFullDeck(); });
-	 * 
-	 * mammals.setOnAction(event -> { curRound = new Round("mammals", 8);
-	 * cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
-	 * makeFullDeck(); });
-	 * 
-	 * mountains.setOnAction(event -> { curRound = new Round("mountains", 8);
-	 * cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
-	 * makeFullDeck(); });
-	 * 
-	 * reptiles.setOnAction(event -> { curRound = new Round("reptiles", 8);
-	 * cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
-	 * makeFullDeck(); }); }
-	 */
-
 	private void makeFullDeck() {
 		
 		this.setAlignment(Pos.CENTER);
-		//this.setGridLinesVisible(true);
 
 		// remove deck choices
 		this.getChildren().remove(cacti);
@@ -191,7 +175,7 @@ public class RoundPane extends GridPane {
 		this.getChildren().remove(mountains);
 		this.getChildren().remove(reptiles);
 		
-		// add labels
+		// add label
 		this.add(stats, 4, 0);
 		
 		this.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)), 0, 1);
@@ -308,8 +292,6 @@ public class RoundPane extends GridPane {
 		double clickX = event.getX();
 		double clickY = event.getY();
 
-		
-		//System.out.println("X: " + clickX + " Y: " + clickY);
 		// row one
 		if (clickY >= 34 && clickY <= 202) {
 			clickRow = 1;
