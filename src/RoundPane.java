@@ -123,7 +123,7 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				curRound = new Round("mammals", 8);
-				cardBackPath = "file:src/images/cardbacks/cardback_mammalas.png";
+				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 				makeFullDeck();
 			}
 
@@ -193,7 +193,7 @@ public class RoundPane extends GridPane {
 		
 		// add labels
 		this.add(stats, 4, 0);
-
+		
 		this.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)), 0, 1);
 		this.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)), 1, 1);
 		this.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)), 2, 1);
@@ -213,6 +213,7 @@ public class RoundPane extends GridPane {
 		this.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)), 1, 4);
 		this.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)), 2, 4);
 		this.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)), 3, 4);
+		
 
 		Image cardOneBack = new Image(curRound.getCard(0).getFileName(), 125, 175, false, false);
 		Image cardTwoBack = new Image(curRound.getCard(1).getFileName(), 125, 175, false, false);
@@ -233,6 +234,7 @@ public class RoundPane extends GridPane {
 
 		for (int i = 0; i < 16; i += 1)
 			textLabels[i] = getCardTextLabel(curRound.getCard(i).getName(), 125, 175);
+		
 
 	}
 
@@ -254,13 +256,15 @@ public class RoundPane extends GridPane {
 				}
 			} else {
 				if (gameStarted) {
-					firstGuess = true;
-					try {
-						Thread.sleep(1250);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					if (clickedCardTwo != null && clickedCardTwo != clickedCardOne) {
+						firstGuess = true;
+						try {
+							Thread.sleep(1250);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						checkCards();
 					}
-					checkCards();
 				} else {
 					gameStarted = true;
 				}
@@ -284,6 +288,19 @@ public class RoundPane extends GridPane {
 			}
 		});
 
+	}
+	
+	private void changeCardOne() {
+		this.add(new ImageView(new Image(clickedCardOne.getFileName(), 125, 175, false, false)), colOne,
+				rowOne);
+		this.add(textLabels[(rowOne - 1) * 4 + colOne], colOne, rowOne);
+	}
+	
+	private void changeCardTwo() {
+		this.add(new ImageView(new Image(clickedCardTwo.getFileName(), 125, 175, false, false)), colTwo,
+				rowTwo);
+		this.add(textLabels[(rowTwo - 1) * 4 + colTwo], colTwo, rowTwo);
+		
 	}
 
 	private Card getClickedCard(MouseEvent event) {
