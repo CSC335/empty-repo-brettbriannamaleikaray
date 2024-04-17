@@ -10,6 +10,13 @@ public class Table {
 	// layout of cards in a random order
 	private Card[] randomizedCards;
 	
+	/**
+	 * creates a table with x pairs of cards in the given category in 
+	 * a randomized order
+	 * 
+	 * @param category
+	 * @param numOfPairs
+	 */
 	public Table(String category, int numOfPairs) {
 		this.category = category;
 		this.numOfPairs = numOfPairs;
@@ -41,18 +48,39 @@ public class Table {
 	    }
 	}
 	
+	/**
+	 * gets the array of cards
+	 * 
+	 * @return the array of cards which are in a random order
+	 */
 	public Card[] getRandomizedCards() {
 		return randomizedCards;
 	}
 	
+	/**
+	 * gets the card at the given index
+	 * 
+	 * @param index  the index of the array of the card to get
+	 * @return the card at the given index
+	 */
 	public Card getCard(int index) {
 		return randomizedCards[index];
 	}
 	
+	/**
+	 * gets the name of the category
+	 * 
+	 * @return the name of the category
+	 */
 	public String getCategory() {
 		return category;
 	}
 	
+	/**
+	 * gets the number of pairs of cards
+	 * 
+	 * @return the number of pairs of cards on the table
+	 */
 	public int getNumOfPairs() {
 		return numOfPairs;
 	}

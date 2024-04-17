@@ -7,6 +7,12 @@ public class CardSet {
 	private String category;
 	private ArrayList<Card> cards;
 	
+	/**
+	 * creates a card set by adding all the cards in the given
+	 * category to an ArrayList
+	 * 
+	 * @param category  the name of the category to get the cards from
+	 */
 	public CardSet(String category) {
 		this.category = category;
 		cards = new ArrayList<>();
@@ -83,28 +89,21 @@ public class CardSet {
 		cards.add(new Card("Western Diamondback Rattlesnake", basePath + "reptiles_westerndiamondbackrattlesnake.png"));
 	}
 	
+	/**
+	 * gets the list of cards
+	 * 
+	 * @return an ArrayList of all the cards in the given category
+	 */
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
 	
+	/**
+	 * gets the name of the category
+	 * 
+	 * @return the name of the category
+	 */
 	public String getCategory() {
 		return category;
 	}
-	
-	public Card getCard(int i) {
-		return cards.get(i);
-	}
-	
-	public void addCard(Card card) {
-		cards.add(card);
-	}
-	
-	public void shuffleCards() {
-		Collections.shuffle(cards);
-	}
-	
-	public void removeCard(Card card) {
-		cards.remove(card);
-	}
-
 }
