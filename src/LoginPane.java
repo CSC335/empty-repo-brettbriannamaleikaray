@@ -8,14 +8,19 @@ public class LoginPane extends GridPane {
 	
 	// Nodes
 	private Label usernameLbl = new Label("Username: ");
-	private Label passwordLbl = new Label("Password: ");
 	private TextField usernameFld = new TextField();
+	private Label passwordLbl = new Label("Password: ");
 	private TextField passwordFld = new TextField();
 	private Button loginBtn = new Button("Login");
 	private Button createAccountBtn = new Button("Create Account");
 	
+	// Other fields
 	private MemoryGameGUI memoryGameGUI;
 	
+	/**
+	 * 
+	 * @param memoryGameGUI
+	 */
 	public LoginPane(MemoryGameGUI memoryGameGUI) {		
 		layoutPane();
 		
