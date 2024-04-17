@@ -28,7 +28,6 @@ public class MemoryGameGUI extends Application {
 	private BorderPane pane = new BorderPane();
 	private TitlePane titlePane;
 	private LoginPane loginPane;
-	private MockLoginPane mockLoginPane;
 	private LeaderboardPane leaderboardPane;
 	private Stage stage;
 
@@ -47,7 +46,6 @@ public class MemoryGameGUI extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		loginPane = new LoginPane(this);
-		mockLoginPane = new MockLoginPane(this);
 
 		titlePane = new TitlePane(this, loginPane);
 		pane.setCenter(titlePane);
