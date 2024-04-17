@@ -34,6 +34,21 @@ public class AccountCollection {
 	}
 	
 	/**
+	 * checks if an account exists with the given username
+	 * 
+	 * @param username  the username to check if exists
+	 * @return true if an account with the given username exists and false if not
+	 */
+	public boolean usernameTaken(String username) {
+		for (Account account : accounts) {
+			if (username.equals(account.getUsername())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Adds a new account to the collection
 	 * 
 	 * @param newAccount The account to be added

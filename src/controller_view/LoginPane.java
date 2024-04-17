@@ -96,7 +96,13 @@ public class LoginPane extends GridPane {
 			String password = passwordFld.getText();
 			usernameFld.setText("");
 			passwordFld.setText("");
-			this.allAccounts.add(new Account(username, password));
+			if (allAccounts.usernameTaken(username)) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setHeaderText("Username Taken");
+				alert.showAndWait();
+			} else {
+				this.allAccounts.add(new Account(username, password));
+			}
 		});
 	}
 	
