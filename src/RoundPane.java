@@ -240,7 +240,7 @@ public class RoundPane extends GridPane {
 				}
 			} else {
 				if (gameStarted) {
-					if (clickedCardTwo != null && clickedCardTwo != clickedCardOne) {
+					if (clickedCardTwo != null && guessPos1 != guessPos2) {
 						firstGuess = true;
 						try {
 							Thread.sleep(1250);
