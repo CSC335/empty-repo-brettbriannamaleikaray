@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * pane for a pane that displays the desired screen.
  */
 public class MemoryGameGUI extends Application {
-	
+
 	private BorderPane pane = new BorderPane();
 	private TitlePane titlePane;
 	private LoginPane loginPane;
@@ -36,7 +36,6 @@ public class MemoryGameGUI extends Application {
 		mockLoginPane = new MockLoginPane(this);
 
 		titlePane = new TitlePane(this, loginPane);
-		leaderboardPane = new LeaderboardPane(this, mockLoginPane);
 		pane.setCenter(titlePane);
 
 		Scene scene = new Scene(pane, 1000, 1000);
@@ -44,12 +43,16 @@ public class MemoryGameGUI extends Application {
 		stage.show();
 		stage.setResizable(false);
 	}
-	
+
 	/**
 	 * @return The login pane of our GUI
 	 */
 	public LoginPane getLoginPane() {
 		return this.loginPane;
+	}
+	
+	public void setLeaderboardPane (LeaderboardPane leaderboardPane) {
+		this.leaderboardPane = leaderboardPane;
 	}
 
 	/**

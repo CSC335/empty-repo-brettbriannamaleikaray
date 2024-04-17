@@ -9,6 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import model.Account;
+import model.AccountCollection;
 
 /**
  * A BorderPane that displays a comparison of all users' top scores. Also
@@ -17,9 +19,9 @@ import javafx.scene.text.Font;
 public class LeaderboardPane extends BorderPane {
 
 	private MemoryGameGUI memoryGame;
-	private MockLoginPane loginPane;
+	private LoginPane loginPane;
 	private VBox vBox;
-	private TableView<MockUserAccount> leaderboardTable;
+	private TableView<Account> leaderboardTable;
 	private BorderPane userStatsPane;
 	private Label leaderboardHeaderText;
 	private Button returnToTitleButton;
@@ -30,7 +32,7 @@ public class LeaderboardPane extends BorderPane {
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 * @param loginPane  The LoginPane where user accounts are stored
 	 */
-	public LeaderboardPane(MemoryGameGUI memoryGame, MockLoginPane loginPane) {
+	public LeaderboardPane(MemoryGameGUI memoryGame, LoginPane loginPane) {
 		this.memoryGame = memoryGame;
 		this.loginPane = loginPane;
 		layoutGUI();
@@ -64,21 +66,21 @@ public class LeaderboardPane extends BorderPane {
 	}
 
 	@SuppressWarnings("deprecation")
-	private TableView<MockUserAccount> generateTable() {
+	private TableView<Account> generateTable() {
 		// Create table and columns
-		TableView<MockUserAccount> leaderboardTable = new TableView<MockUserAccount>();
+		TableView<Account> leaderboardTable = new TableView<Account>();
 
-		TableColumn<MockUserAccount, String> userNameColumn = new TableColumn<MockUserAccount, String>("User Name");
-		userNameColumn.setCellValueFactory(new PropertyValueFactory<MockUserAccount, String>("userName"));
+		TableColumn<Account, String> userNameColumn = new TableColumn<Account, String>("User Name");
+		userNameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
 		userNameColumn.setSortable(false);
 
-		TableColumn<MockUserAccount, String> lowestScoreColumn = new TableColumn<MockUserAccount, String>(
+		TableColumn<Account, String> lowestScoreColumn = new TableColumn<Account, String>(
 				"Lowest Score");
-		lowestScoreColumn.setCellValueFactory(new PropertyValueFactory<MockUserAccount, String>("lowestScore"));
+		lowestScoreColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("lowestScore"));
 
-		TableColumn<MockUserAccount, String> averageScoreColumn = new TableColumn<MockUserAccount, String>(
+		TableColumn<Account, String> averageScoreColumn = new TableColumn<Account, String>(
 				"Average Score");
-		averageScoreColumn.setCellValueFactory(new PropertyValueFactory<MockUserAccount, String>("averageScore"));
+		averageScoreColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("averageScore"));
 
 		leaderboardTable.getColumns().add(userNameColumn);
 		leaderboardTable.getColumns().add(lowestScoreColumn);
@@ -92,8 +94,9 @@ public class LeaderboardPane extends BorderPane {
 		leaderboardTable.setPadding(new Insets(25, 100, 50, 100)); // top, right, bottom, left
 
 		// Put user account data into table
-		for (int i = 0; i < loginPane.getMockAccountCollectionSize(); i += 1) {
-			leaderboardTable.getItems().add(loginPane.getAccount(i));
+		AccountCollection allAccounts = loginPane.getAllAccounts();
+		for (int i = 0; i < allAccounts.size(); i += 1) {
+			leaderboardTable.getItems().add(allAccounts.get(i));
 		}
 
 		return leaderboardTable;

@@ -39,4 +39,20 @@ public class AccountCollection {
 		this.accounts.add(newAccount);
 	}
 	
+	/**
+	 * @return The size of the account collection
+	 */
+	public int size() {
+		return this.accounts.size();
+	}
+	
+	/**
+	 * Retrieve the account at a specific index
+	 * 
+	 * @param i The index
+	 * @return The desired account
+	 */
+	public Account get(int i) {
+		return accounts.get(i);
+	}
 }

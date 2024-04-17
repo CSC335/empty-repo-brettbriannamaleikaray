@@ -69,7 +69,11 @@ public class LoginPane extends GridPane {
 			String username = usernameFld.getText();
 			String password = passwordFld.getText();
 			this.curAccount = this.allAccounts.findAccount(username, password);
-			System.out.println(curAccount == null);
+			if (this.curAccount != null) {
+				LeaderboardPane newLeaderboardPane;
+				newLeaderboardPane = new LeaderboardPane(memoryGameGUI, this);
+				this.memoryGameGUI.setLeaderboardPane(newLeaderboardPane);
+			}
 		});
 		
 		createAccountBtn.setOnAction(e -> {
@@ -86,4 +90,17 @@ public class LoginPane extends GridPane {
 		return this.curAccount != null;
 	}
 	
+	/**
+	 * @return The current account
+	 */
+	public Account getCurrentAccount() {
+		return this.curAccount;
+	}
+	
+	/**
+	 * @return All existing accounts
+	 */
+	public AccountCollection getAllAccounts() {
+		return this.allAccounts;
+	}
 }

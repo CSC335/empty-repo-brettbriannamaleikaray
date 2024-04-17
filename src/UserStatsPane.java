@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 public class UserStatsPane extends BorderPane {
 
 	private MemoryGameGUI memoryGame;
-	private MockLoginPane loginPane;
+	private LoginPane loginPane;
 	private ListView<String> statsList;
 	private Label userStatsHeaderText;
 	private VBox vBox;
@@ -24,7 +24,7 @@ public class UserStatsPane extends BorderPane {
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 * @param loginPane  The LoginPane where user accounts are stored
 	 */
-	public UserStatsPane(MemoryGameGUI memoryGame, MockLoginPane loginPane) {
+	public UserStatsPane(MemoryGameGUI memoryGame, LoginPane loginPane) {
 		this.memoryGame = memoryGame;
 		this.loginPane = loginPane;
 		statsList = generateListView();
@@ -35,7 +35,7 @@ public class UserStatsPane extends BorderPane {
 
 	private void layoutGUI() {
 		// Header label
-		String loggedInAccountName = (String) loginPane.getLoggedInAccountName();
+		String loggedInAccountName = (String) loginPane.getCurrentAccount().getUsername();
 		userStatsHeaderText = new Label(loggedInAccountName + "'s Stats");
 		Font userStatsHeaderFont = Font.font("Courier New", FontWeight.NORMAL, 28);
 		userStatsHeaderText.setFont(userStatsHeaderFont);
@@ -52,10 +52,10 @@ public class UserStatsPane extends BorderPane {
 		ListView<String> newStatsList = new ListView<>();
 
 		// Add items
-		newStatsList.getItems().add("Rounds Played: " + loginPane.getLoggedInAccount().getRoundsPlayed());
-		newStatsList.getItems().add("Total Wins: " + loginPane.getLoggedInAccount().getTotalWins());
-		newStatsList.getItems().add("Average Score: " + loginPane.getLoggedInAccount().getAverageScore());
-		newStatsList.getItems().add("Lowest Score: " + loginPane.getLoggedInAccount().getLowestScore());
+		newStatsList.getItems().add("Rounds Played: " + loginPane.getCurrentAccount().getRoundsPlayed());
+		newStatsList.getItems().add("Total Wins: " + loginPane.getCurrentAccount().getTotalWins());
+		newStatsList.getItems().add("Average Score: " + loginPane.getCurrentAccount().getAverageScore());
+		newStatsList.getItems().add("Lowest Score: " + loginPane.getCurrentAccount().getLowestScore());
 
 		// Set size
 		newStatsList.setMaxWidth(300);
