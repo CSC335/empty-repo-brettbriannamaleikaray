@@ -18,7 +18,7 @@ public class TitlePane extends BorderPane {
 	private Button startButton = new Button("Start Game");
 	private Button leaderboardButton = new Button("Leaderboard");
 	private Button quitButton = new Button("Quit");
-	private MockLoginPane loginPane;
+	private LoginPane loginPane;
 
 	/**
 	 * Constructs the TitlePane
@@ -26,7 +26,7 @@ public class TitlePane extends BorderPane {
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 * @param loginPane  The LoginPane where user accounts are stored
 	 */
-	public TitlePane(MemoryGameGUI memoryGame, MockLoginPane loginPane) {
+	public TitlePane(MemoryGameGUI memoryGame, LoginPane loginPane) {
 		this.memoryGame = memoryGame;
 		this.loginPane = loginPane;
 		layoutPane();
