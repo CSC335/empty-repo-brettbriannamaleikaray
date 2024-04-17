@@ -102,6 +102,13 @@ public class RoundPane extends GridPane {
 		// cacti chosen
 		cacti.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+			/**
+			 * Handler for if the cacti card back is clicked. Starts a new
+			 * round with the cacti deck and sets the cardBackPath to the
+			 * cacti images. Then calls a private method to create a full
+			 * deck of cacti cards.
+			 * @param event MouseEvent for if cacti card is clicked
+			 */
 			@Override
 			public void handle(MouseEvent event) {
 				curRound = new Round("cacti", 8);
@@ -114,6 +121,13 @@ public class RoundPane extends GridPane {
 		// cities chosen
 		cities.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+			/**
+			 * Handler for if the cities card back is clicked. Starts a new
+			 * round with the cities deck and sets the cardBackPath to the
+			 * city images. Then calls a private method to create a full
+			 * deck of city cards.
+			 * @param event MouseEvent for if cities card is clicked
+			 */
 			@Override
 			public void handle(MouseEvent event) {
 				curRound = new Round("cities", 8);
@@ -126,6 +140,13 @@ public class RoundPane extends GridPane {
 		// mammals chosen
 		mammals.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+			/**
+			 * Handler for if the mammals card back is clicked. Starts a new
+			 * round with the mammals deck and sets the cardBackPath to the
+			 * mammal images. Then calls a private method to create a full
+			 * deck of mammals cards.
+			 * @param event MouseEvent for if mammals card is clicked
+			 */
 			@Override
 			public void handle(MouseEvent event) {
 				curRound = new Round("mammals", 8);
@@ -138,6 +159,13 @@ public class RoundPane extends GridPane {
 		// mountains chosen
 		mountains.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+			/**
+			 * Handler for if the mountains card back is clicked. Starts a new
+			 * round with the mountains deck and sets the cardBackPath to the
+			 * mountain images. Then calls a private method to create a full
+			 * deck of mountains cards.
+			 * @param event MouseEvent for if mountanis card is clicked
+			 */
 			@Override
 			public void handle(MouseEvent event) {
 				curRound = new Round("mountains", 8);
@@ -150,6 +178,13 @@ public class RoundPane extends GridPane {
 		// reptiles chosen
 		reptiles.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+			/**
+			 * Handler for if the reptiles card back is clicked. Starts a new
+			 * round with the reptiles deck and sets the cardBackPath to the
+			 * reptile images. Then calls a private method to create a full
+			 * deck of reptiles cards.
+			 * @param event MouseEvent for if reptiles card is clicked
+			 */
 			@Override
 			public void handle(MouseEvent event) {
 				curRound = new Round("reptiles", 8);
