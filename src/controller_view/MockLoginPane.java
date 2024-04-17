@@ -1,3 +1,4 @@
+package controller_view;
 import java.util.ArrayList;
 
 import javafx.geometry.Insets;
@@ -6,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import model.MockUserAccount;
 
 public class MockLoginPane extends BorderPane {
 	private MockUserAccount loggedInAccount;
