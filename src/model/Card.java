@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * represents a card and contains the name of the card and the file name
+ * of the card image
+ */
 public class Card {
 	
 	private String name;

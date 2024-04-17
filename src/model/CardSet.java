@@ -2,6 +2,9 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * represents a set of all cards in a specified category
+ */
 public class CardSet {
 	
 	private String category;

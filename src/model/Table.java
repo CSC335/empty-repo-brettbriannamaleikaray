@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * represents a table of randomized cards, containing the specified 
+ * number of pairs of cards all within the specified category
+ */
 public class Table {
 	
 	private String category;

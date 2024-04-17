@@ -2,9 +2,12 @@ package controller_view;
 import java.util.ArrayList;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import model.Account;
 import model.AccountCollection;
@@ -15,7 +18,7 @@ public class LoginPane extends GridPane {
 	private Label usernameLbl = new Label("Username: ");
 	private TextField usernameFld = new TextField();
 	private Label passwordLbl = new Label("Password: ");
-	private TextField passwordFld = new TextField();
+	private PasswordField passwordFld = new PasswordField();
 	private Button loginBtn = new Button("Login");
 	private Button createAccountBtn = new Button("Create Account");
 	
@@ -71,17 +74,25 @@ public class LoginPane extends GridPane {
 		loginBtn.setOnAction(e -> {
 			String username = usernameFld.getText();
 			String password = passwordFld.getText();
+			usernameFld.setText("");
+			passwordFld.setText("");
 			this.curAccount = this.allAccounts.findAccount(username, password);
 			if (this.curAccount != null) {
 				LeaderboardPane newLeaderboardPane;
 				newLeaderboardPane = new LeaderboardPane(memoryGameGUI, this);
 				this.memoryGameGUI.setLeaderboardPane(newLeaderboardPane);
+			} else {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setHeaderText("Invalid credentials");
+				alert.showAndWait();
 			}
 		});
 		
 		createAccountBtn.setOnAction(e -> {
 			String username = usernameFld.getText();
 			String password = passwordFld.getText();
+			usernameFld.setText("");
+			passwordFld.setText("");
 			this.allAccounts.add(new Account(username, password));
 		});
 	}
