@@ -13,20 +13,30 @@ public class AccountCollection {
 	}
 	
 	/**
-	 * Sees if given login info exists
+	 * Finds an account given login info
 	 * 
 	 * @param username Proposed username
 	 * @param password Proposed password
-	 * @return Returns true if the login info exists
+	 * @return Returns the account if the login info exists or null if not
 	 */
-	public boolean isValidLogin(String username, String password) {
+	public Account findAccount(String username, String password) {
 		for (Account account : accounts) {
 			String curUsername = account.getUsername();
 			String curPassword = account.getPassword();
-			if (username == curUsername && password == curPassword) {
-				return true;
+			if (username.equals(curUsername) && password.equals(curPassword)) {
+				return account;
 			}
 		}
-		return false;
+		return null;
 	}
+	
+	/**
+	 * Adds a new account to the collection
+	 * 
+	 * @param newAccount The account to be added
+	 */
+	public void add(Account newAccount) {
+		this.accounts.add(newAccount);
+	}
+	
 }

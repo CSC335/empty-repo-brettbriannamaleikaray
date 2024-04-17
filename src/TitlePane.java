@@ -1,5 +1,7 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -18,6 +20,7 @@ public class TitlePane extends BorderPane {
 	private Button startButton = new Button("Start Game");
 	private Button leaderboardButton = new Button("Leaderboard");
 	private Button quitButton = new Button("Quit");
+	private Alert loginFirstAlt;
 	private LoginPane loginPane;
 
 	/**
@@ -35,6 +38,8 @@ public class TitlePane extends BorderPane {
 
 	private void layoutPane() {
 		GridPane buttons = new GridPane();
+
+		this.loginFirstAlt = new Alert(AlertType.ERROR, "Please login first!");
 
 		startButton.setFont(new Font(35));
 		leaderboardButton.setFont(new Font(20));
@@ -63,18 +68,28 @@ public class TitlePane extends BorderPane {
 		this.setCenter(buttons);
 		this.setBottom(loginPane);
 
-		this.setStyle("-fx-background-image: url('file:src/images/desertbackground.jpg')");
+		this.setStyle(
+				"-fx-background-image: url('file:src/images/desertbackground.jpg')");
 	}
 
 	private void registerListeners() {
 		startButton.setOnAction(event -> {
-			memoryGame.startRound();
+			if (this.loginPane.isLoggedIn()) {
+				memoryGame.startRound();
+			} else {
+				this.loginFirstAlt.show();
+			}
 		});
 		leaderboardButton.setOnAction(event -> {
-			memoryGame.showLeaderboard();
+			if (this.loginPane.isLoggedIn()) {
+				memoryGame.showLeaderboard();
+			} else {
+				this.loginFirstAlt.show();
+			}
 		});
 		quitButton.setOnAction(event -> {
 			memoryGame.quit();
 		});
 	}
+
 }

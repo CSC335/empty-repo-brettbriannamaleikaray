@@ -3,6 +3,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.Account;
+import model.AccountCollection;
 
 public class LoginPane extends GridPane {
 	
@@ -16,15 +18,21 @@ public class LoginPane extends GridPane {
 	
 	// Other fields
 	private MemoryGameGUI memoryGameGUI;
+	private Account curAccount;
+	private AccountCollection allAccounts;
 	
 	/**
 	 * 
 	 * @param memoryGameGUI
 	 */
-	public LoginPane(MemoryGameGUI memoryGameGUI) {		
-		layoutPane();
-		
+	public LoginPane(MemoryGameGUI memoryGameGUI) {	
 		this.memoryGameGUI = memoryGameGUI;
+		this.curAccount = null;
+		this.allAccounts = new AccountCollection();
+		
+		addDefaultAccounts();
+		layoutPane();
+		setHandlers();
 	}
 	
 	/**
@@ -41,6 +49,41 @@ public class LoginPane extends GridPane {
 		this.setAlignment(Pos.CENTER);
 		this.setVgap(10);
 		this.setHgap(10);
+	}
+	
+	/**
+	 * Add default accounts to account collection
+	 */
+	private void addDefaultAccounts() {
+		this.allAccounts.add(new Account("brett", "brimmer"));
+		this.allAccounts.add(new Account("brianna", "yuki"));
+		this.allAccounts.add(new Account("maleika", "fleming"));
+		this.allAccounts.add(new Account("ray", "xiang"));
+	}
+	
+	/**
+	 * Set event handlers here
+	 */
+	private void setHandlers() {
+		loginBtn.setOnAction(e -> {
+			String username = usernameFld.getText();
+			String password = passwordFld.getText();
+			this.curAccount = this.allAccounts.findAccount(username, password);
+			System.out.println(curAccount == null);
+		});
+		
+		createAccountBtn.setOnAction(e -> {
+			String username = usernameFld.getText();
+			String password = passwordFld.getText();
+			this.allAccounts.add(new Account(username, password));
+		});
+	}
+	
+	/**
+	 * @return Returns true if the user has logged in
+	 */
+	public boolean isLoggedIn() {
+		return this.curAccount != null;
 	}
 	
 }
