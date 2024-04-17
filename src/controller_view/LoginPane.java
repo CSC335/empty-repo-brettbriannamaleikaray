@@ -9,6 +9,9 @@ import javafx.scene.layout.GridPane;
 import model.Account;
 import model.AccountCollection;
 
+/**
+ * The login pane of our GUI; a place for users to login or create an account
+ */
 public class LoginPane extends GridPane {
 	
 	// Nodes

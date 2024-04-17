@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a collection of accounts
+ */
 public class AccountCollection {
 	private ArrayList<Account> accounts;
 	
@@ -39,6 +42,11 @@ public class AccountCollection {
 		this.accounts.add(newAccount);
 	}
 	
+	/**
+	 * Sets the contents of a collection of accounts given an array of accounts
+	 * 
+	 * @param accounts The array of accounts
+	 */
 	public void setAccounts(ArrayList<Account> accounts) {
 		this.accounts.clear();
 		this.accounts.addAll(accounts);
