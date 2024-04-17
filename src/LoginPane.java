@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -102,5 +104,9 @@ public class LoginPane extends GridPane {
 	 */
 	public AccountCollection getAllAccounts() {
 		return this.allAccounts;
+	}
+	
+	public void setAllAccounts(ArrayList<Account> accounts) {
+		this.allAccounts.setAccounts(accounts);
 	}
 }

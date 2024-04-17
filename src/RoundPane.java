@@ -438,6 +438,7 @@ public class RoundPane extends GridPane {
 			String score = curRound.getScore().toString();
 			System.out.println("Game finished");
 			scoreMsg = new Label("Your score: " + score);
+			this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
 			this.add(scoreMsg, 0, 4);
 		}
 		

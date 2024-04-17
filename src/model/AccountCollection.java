@@ -39,6 +39,11 @@ public class AccountCollection {
 		this.accounts.add(newAccount);
 	}
 	
+	public void setAccounts(ArrayList<Account> accounts) {
+		this.accounts.clear();
+		this.accounts.addAll(accounts);
+	}
+	
 	/**
 	 * @return The size of the account collection
 	 */
