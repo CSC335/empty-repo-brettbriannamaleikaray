@@ -1,10 +1,13 @@
 package model;
+
+import java.io.Serializable;
+
 /**
  * A single guess consists of the positions of the first and second cards.
  * 
  * @author Brett, Brianna, Maleika, Ray
  */
-public class Guess {
+public class Guess implements Serializable {
 	
 	private int first;
 	private int second;

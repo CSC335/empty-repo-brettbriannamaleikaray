@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,9 +9,10 @@ import java.util.ArrayList;
  * 
  * @author Brett, Brianna, Maleika, Ray
  */
-public class Round {
+public class Round implements Serializable {
 
-	private Table table;
+	private static final long serialVersionUID = 1L;
+	private transient Table table;
 	private ArrayList<Guess> guessHistory;
 	private boolean isActive;
 	private int numOfMatches;
