@@ -271,6 +271,13 @@ public class RoundPane extends GridPane {
 				if (clickedCardTwo != null && clickedCardTwo != clickedCardOne && guessPos2 >= 0) {
 					flipCardTwo();
 				}
+
+				if (clickedCardTwo != null && clickedCardOne.getName().equals(clickedCardTwo.getName())
+						&& guessPos2 >= 0) {
+					flipCardTwo();
+					flipCardTwo();
+				}
+
 			}
 		});
 
@@ -281,8 +288,8 @@ public class RoundPane extends GridPane {
 
 		if (clickedCardOne.isFlipped() == false) {
 			// Change to front image
-			cardImages.get(cardOneIndex).setImage(
-					new Image(curRound.getCard(cardOneIndex).getFileName(), 125, 175, false, false));
+			cardImages.get(cardOneIndex)
+					.setImage(new Image(curRound.getCard(cardOneIndex).getFileName(), 125, 175, false, false));
 
 			// Add text label
 			this.add(textLabels[cardOneIndex], colOne, rowOne);
@@ -303,8 +310,8 @@ public class RoundPane extends GridPane {
 
 		if (clickedCardTwo.isFlipped() == false) {
 			// Change to front image
-			cardImages.get(cardTwoIndex).setImage(
-					new Image(curRound.getCard(cardTwoIndex).getFileName(), 125, 175, false, false));
+			cardImages.get(cardTwoIndex)
+					.setImage(new Image(curRound.getCard(cardTwoIndex).getFileName(), 125, 175, false, false));
 
 			// Add text label
 			this.add(textLabels[cardTwoIndex], colTwo, rowTwo);

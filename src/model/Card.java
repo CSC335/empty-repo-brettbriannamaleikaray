@@ -23,7 +23,7 @@ public class Card {
 	}
 
 	/**
-	 * Let's us know if if the card is flipped face up or not
+	 * Lets us know if if the card is flipped face up or not
 	 * 
 	 * @return A boolean. "True" means card is flipped face up, "False" means it's
 	 *         face down
@@ -33,7 +33,7 @@ public class Card {
 	}
 
 	/**
-	 * Let's us know if if the card has been removed from the board
+	 * Lets us know if if the card has been removed from the board
 	 * 
 	 * @return A boolean. "True" means card has been removed from the board
 	 */
