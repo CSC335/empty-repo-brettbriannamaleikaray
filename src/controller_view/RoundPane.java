@@ -18,6 +18,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Card;
@@ -33,6 +35,7 @@ public class RoundPane extends GridPane {
 
 	private Card nullCard = new Card("null", "null");
 	private Label scoreMsg;
+	private Label winMsg;
 	private Card clickedCardOne = nullCard;
 	private Card clickedCardTwo = nullCard;
 	double firstX;
@@ -221,6 +224,7 @@ public class RoundPane extends GridPane {
 			textLabels[i] = getCardTextLabel(curRound.getCard(i).getName(), 125, 175);
 			cardImages.add(new ImageView(new Image(cardBackPath, 125, 175, false, false)));
 
+			// add front-of-card image to board
 			this.add(cardImages.get(cardImages.size() - 1), i % 4, i / 4);
 		}
 	}
@@ -268,10 +272,12 @@ public class RoundPane extends GridPane {
 				cardTwoIndex = rowTwo * 4 + colTwo;
 				guessPos2 = guessPos;
 
+				// Flip 2nd card face up
 				if (clickedCardTwo != null && clickedCardTwo != clickedCardOne && guessPos2 >= 0) {
 					flipCardTwo();
 				}
 
+				// Ensure 2nd card is face-up when there's a match
 				if (clickedCardTwo != null && clickedCardOne.getName().equals(clickedCardTwo.getName())
 						&& guessPos2 >= 0) {
 					flipCardTwo();
@@ -400,11 +406,14 @@ public class RoundPane extends GridPane {
 		}
 
 		if (!curRound.isActive()) {
-			String score = curRound.getScore().toString();
-			System.out.println("Game finished");
-			scoreMsg = new Label("Your score: " + score);
 			this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
-			this.add(scoreMsg, 0, 4);
+			// maybe remove this code now that there's a score counter
+			// System.out.println("Game finished");
+			// String score = curRound.getScore().toString();
+			// scoreMsg = new Label("Your score: " + score);
+			// this.add(scoreMsg, 0, 4);
+			winMsg = new Label("You Win!");
+			this.add(winMsg, 2, 1);
 		}
 
 		stats.setText("guesses: " + guessCount + "\nscore: " + scoreCount);

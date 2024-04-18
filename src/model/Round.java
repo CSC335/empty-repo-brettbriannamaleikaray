@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 
 /**
@@ -17,8 +18,8 @@ public class Round {
 	private Double score;
 
 	/**
-	 * Initialize a round of memory match by choosing a category and the number
-	 * of pairs to match from that category.
+	 * Initialize a round of memory match by choosing a category and the number of
+	 * pairs to match from that category.
 	 * 
 	 * @param category:   valid category accounted for in CardSet
 	 * @param numOfPairs: 0 to what's the max number of cards we support?
@@ -26,12 +27,12 @@ public class Round {
 	public Round(String category, int numOfPairs) {
 		this.numOfPairs = numOfPairs;
 		table = new Table(category, numOfPairs);
-		System.out.println(numOfPairs);
+		// System.out.println(numOfPairs);
 		isActive = true;
 		guessHistory = new ArrayList<Guess>();
 		score = 0.0;
 	}
-	
+
 	/**
 	 * Get the card at position i.
 	 * 
@@ -54,7 +55,7 @@ public class Round {
 		if (isMatch(guess)) {
 			numOfMatches++;
 		}
-		System.out.println(numOfMatches + " " + numOfPairs);
+		// System.out.println(numOfMatches + " " + numOfPairs);
 		if (numOfMatches == numOfPairs) {
 			System.out.println("isActive false");
 			isActive = false;
@@ -84,25 +85,25 @@ public class Round {
 	}
 
 	/**
-	 * Use this to initialize the score variable when a round ends. Found this
-	 * post on calculating the score:
+	 * Use this to initialize the score variable when a round ends. Found this post
+	 * on calculating the score:
 	 * 
 	 * https://math.stackexchange.com/questions/1877355/how-many-turns-on-average-does-it-take-for-a-perfect-player-to-win-concentrati
 	 */
 	private void calculateScore() {
 		score = (double) (numOfMatches / guessHistory.size());
 	}
-	
+
 	/**
 	 * Returns the final score.
 	 * 
-	 * @return 0 if score has not been calculated, otherwise returns the score
-	 * after calculateScore has been invoked
+	 * @return 0 if score has not been calculated, otherwise returns the score after
+	 *         calculateScore has been invoked
 	 */
 	public Double getScore() {
 		return score;
 	}
-	
+
 	public int numOfMatches() {
 		return numOfMatches;
 	}
