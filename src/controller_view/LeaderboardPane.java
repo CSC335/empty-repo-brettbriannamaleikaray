@@ -39,7 +39,7 @@ public class LeaderboardPane extends BorderPane {
 		this.loginPane = loginPane;
 		layoutGUI();
 		registerListeners();
-		this.getStylesheets().add("LeaderboardStyle.css");
+		this.getStylesheets().add("file:src/controller_view/LeaderboardStyle.css");
 	}
 
 	private void layoutGUI() {

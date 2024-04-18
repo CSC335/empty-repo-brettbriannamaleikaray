@@ -29,7 +29,7 @@ public class UserStatsPane extends BorderPane {
 		this.memoryGame = memoryGame;
 		this.loginPane = loginPane;
 		statsList = generateListView();
-		this.getStylesheets().add("UserStatsStyle.css");
+		this.getStylesheets().add("file:src/controller_view/UserStatsStyle.css");
 
 		layoutGUI();
 	}
