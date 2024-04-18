@@ -127,7 +127,12 @@ public class LoginPane extends GridPane {
 		return this.allAccounts;
 	}
 	
-	public void setAllAccounts(ArrayList<Account> accounts) {
-		this.allAccounts.setAccounts(accounts);
+	/**
+	 * sets all accounts to the given collection
+	 * 
+	 * @param accounts  a collection of all accounts
+	 */
+	public void setAllAccounts(AccountCollection accounts) {
+		this.allAccounts = accounts;
 	}
 }

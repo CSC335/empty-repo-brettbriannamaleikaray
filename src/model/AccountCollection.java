@@ -1,11 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Represents a collection of accounts
  */
-public class AccountCollection {
+public class AccountCollection implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Account> accounts;
 	
 	/**

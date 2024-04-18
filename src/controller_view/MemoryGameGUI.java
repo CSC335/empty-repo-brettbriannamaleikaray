@@ -16,6 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Account;
+import model.AccountCollection;
 
 /**
  * Starts the Sonoran Memory Game app. Initially displays a TitlePane that
@@ -115,7 +116,7 @@ public class MemoryGameGUI extends Application {
 				FileInputStream rawBytes = new FileInputStream("objects.ser");
 				ObjectInputStream in = new ObjectInputStream(rawBytes);
 				@SuppressWarnings("unchecked")
-				ArrayList<Account> old = (ArrayList<Account>) in.readObject();
+				AccountCollection old = (AccountCollection) in.readObject();
 				loginPane.setAllAccounts(old);
 				in.close();
 			} catch (IOException e) {

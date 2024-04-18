@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,8 +9,9 @@ import java.util.ArrayList;
  * 
  * @author
  */
-public class Account {
+public class Account implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	private ArrayList<Round> roundHistory;
