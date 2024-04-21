@@ -34,31 +34,7 @@ public class Table {
 		randomizeCards();
 	}
 	
-	private void randomizeCardsMatch2() {
-		CardSet cardSet = new CardSet(category);
-		ArrayList<Card> allCards = cardSet.getCards();
-		// copying allCards
-		ArrayList<Card> tempCards = new ArrayList<>();
-		for (Card card : allCards) {
-			tempCards.add(card);
-		}
-		Collections.shuffle(tempCards);
-		// adds 2 of each random card to the randomizedCards array
-		for (int i = 0; i < numOfPairs; i++) {
-			randomizedCards[i*2] = tempCards.get(i);
-			randomizedCards[i*2+1] = tempCards.get(i);
-		}
-		// shuffle randomizedCards array
-	    Random random = new Random();
-	    for (int i = randomizedCards.length - 1; i > 0; i--) {
-	        int index = random.nextInt(i + 1);
-	        Card temp = randomizedCards[index];
-	        randomizedCards[index] = randomizedCards[i];
-	        randomizedCards[i] = temp;
-	    }
-	}
-	
-	private void randomizeCardsMatch4() {
+	private void randomizeCards() {
 		CardSet cardSet = new CardSet(category);
 		ArrayList<Card> allCards = cardSet.getCards();
 		// copying allCards
