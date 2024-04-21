@@ -30,7 +30,7 @@ public class Round implements Serializable {
 	public Round(Mode mode, String category, int numOfPairs) {
 		this.numOfPairs = numOfPairs;
 		this.mode = mode;
-		table = new Table(category, numOfPairs);
+		table = new Table(mode, category, numOfPairs);
 		// System.out.println(numOfPairs);
 		isActive = true;
 		guessHistory = new ArrayList<Guess>();
