@@ -18,6 +18,7 @@ public class Round implements Serializable {
 	private int numOfMatches;
 	private int numOfPairs;
 	private Double score;
+	private Mode mode;
 
 	/**
 	 * Initialize a round of memory match by choosing a category and the number of
@@ -26,8 +27,9 @@ public class Round implements Serializable {
 	 * @param category:   valid category accounted for in CardSet
 	 * @param numOfPairs: 0 to what's the max number of cards we support?
 	 */
-	public Round(String category, int numOfPairs) {
+	public Round(Mode mode, String category, int numOfPairs) {
 		this.numOfPairs = numOfPairs;
+		this.mode = mode;
 		table = new Table(category, numOfPairs);
 		// System.out.println(numOfPairs);
 		isActive = true;
@@ -48,18 +50,14 @@ public class Round implements Serializable {
 	/**
 	 * Remember to invoke this method whenever the player makes a guess!
 	 * 
-	 * @param first:  position of first flip
-	 * @param second: position of second flip
+	 * @param guess: the guess the user makes
 	 */
-	public void makeGuess(int first, int second) {
-		Guess guess = new Guess(first, second);
+	public void makeGuess(Guess guess) {
 		guessHistory.add(guess);
 		if (isMatch(guess)) {
 			numOfMatches++;
 		}
-		// System.out.println(numOfMatches + " " + numOfPairs);
 		if (numOfMatches == numOfPairs) {
-			System.out.println("isActive false");
 			isActive = false;
 			calculateScore();
 		}
@@ -72,9 +70,19 @@ public class Round implements Serializable {
 	 * @return true if guess matched, false if not
 	 */
 	private boolean isMatch(Guess guess) {
-		Card firstCard = table.getCard(guess.first());
-		Card secondCard = table.getCard(guess.second());
-		return firstCard.getName() == secondCard.getName();
+		if (mode == Mode.NORMAL || mode == Mode.TIMED) {
+			Card firstCard = table.getCard(guess.getFirst());
+			Card secondCard = table.getCard(guess.getSecond());
+			return firstCard.getName() == secondCard.getName();
+		} else if (mode == Mode.MATCH4) {
+			Card firstCard = table.getCard(guess.getFirst());
+			Card secondCard = table.getCard(guess.getSecond());
+			Card thirdCard = table.getCard(guess.getThird());
+			Card fourthCard = table.getCard(guess.getFourth());
+			return firstCard.getName() == secondCard.getName() && secondCard.getName() == thirdCard.getName()
+					&& thirdCard.getName() == fourthCard.getName();
+		}
+		return false;
 	}
 
 	/**
@@ -93,7 +101,7 @@ public class Round implements Serializable {
 	 * https://math.stackexchange.com/questions/1877355/how-many-turns-on-average-does-it-take-for-a-perfect-player-to-win-concentrati
 	 */
 	private void calculateScore() {
-		score = (double) (numOfMatches / guessHistory.size());
+		score = numOfMatches * 1.0 / guessHistory.size();
 	}
 
 	/**

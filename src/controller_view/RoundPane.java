@@ -23,6 +23,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Card;
+import model.Guess;
+import model.Mode;
 import model.Round;
 
 /**
@@ -70,14 +72,16 @@ public class RoundPane extends GridPane {
 	private String cardBackPath;
 	private Round curRound;
 	private MemoryGameGUI memoryGame;
+	private Mode mode;
 
 	/**
 	 * Constructs a new RoundPane
 	 * 
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 */
-	public RoundPane(MemoryGameGUI memoryGame) {
+	public RoundPane(MemoryGameGUI memoryGame, Mode mode) {
 		this.memoryGame = memoryGame;
+		this.mode = mode;
 		layoutGUI();
 		setMouseHandler();
 		cardImages = new ArrayList<ImageView>();
@@ -117,7 +121,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round("cacti", 8);
+				curRound = new Round(mode, "cacti", 8);
 				cardBackPath = "file:src/images/cardbacks/cardback_cacti.png";
 				makeFullDeck();
 			}
@@ -136,7 +140,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round("cities", 8);
+				curRound = new Round(mode, "cities", 8);
 				cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
 				makeFullDeck();
 			}
@@ -155,7 +159,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round("mammals", 8);
+				curRound = new Round(mode, "mammals", 8);
 				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 				makeFullDeck();
 			}
@@ -174,7 +178,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round("mountains", 8);
+				curRound = new Round(mode, "mountains", 8);
 				cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
 				makeFullDeck();
 			}
@@ -193,7 +197,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round("reptiles", 8);
+				curRound = new Round(mode, "reptiles", 8);
 				cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
 				makeFullDeck();
 			}
@@ -369,7 +373,8 @@ public class RoundPane extends GridPane {
 			guessCount += 1;
 
 			if (!clickedCardOne.equals(nullCard) && !clickedCardTwo.equals(nullCard)) {
-				curRound.makeGuess(guessPos1, guessPos2);
+				Guess guess = new Guess(guessPos1, guessPos2);
+				curRound.makeGuess(guess);
 				// see if cards match
 				if (clickedCardOne.getName().equals(clickedCardTwo.getName())) {
 					// Match confirmed

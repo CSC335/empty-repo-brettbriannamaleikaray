@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Account;
 import model.AccountCollection;
+import model.Mode;
 
 /**
  * Starts the Sonoran Memory Game app. Initially displays a TitlePane that
@@ -98,9 +99,11 @@ public class MemoryGameGUI extends Application {
 
 	/**
 	 * Goes to the gameplay screen by displaying RoundPane
+	 * 
+	 * @param mode  the game mode of the round to start
 	 */
-	public void startRound() {
-		pane.setCenter(new RoundPane(this));
+	public void startRound(Mode mode) {
+		pane.setCenter(new RoundPane(this, mode));
 	}
 
 	private void startupPreamble() {

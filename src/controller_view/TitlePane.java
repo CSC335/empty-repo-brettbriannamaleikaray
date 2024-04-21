@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import model.Mode;
 
 /**
  * A BorderPane which displays the title screen, including "Start Game",
@@ -76,7 +77,7 @@ public class TitlePane extends BorderPane {
 	private void registerListeners() {
 		startButton.setOnAction(event -> {
 			if (this.loginPane.isLoggedIn()) {
-				memoryGame.startRound();
+				memoryGame.startRound(Mode.NORMAL);
 			} else {
 				this.loginFirstAlt.show();
 			}
