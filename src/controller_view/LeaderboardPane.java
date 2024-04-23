@@ -76,16 +76,16 @@ public class LeaderboardPane extends BorderPane {
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
 		userNameColumn.setSortable(false);
 
-		TableColumn<Account, String> lowestScoreColumn = new TableColumn<Account, String>(
-				"Lowest Score");
-		lowestScoreColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("lowestScore"));
+		TableColumn<Account, String> highestScoreColumn = new TableColumn<Account, String>(
+				"High Score");
+		highestScoreColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("highestScore"));
 
 		TableColumn<Account, String> averageScoreColumn = new TableColumn<Account, String>(
 				"Average Score");
 		averageScoreColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("averageScore"));
 
 		leaderboardTable.getColumns().add(userNameColumn);
-		leaderboardTable.getColumns().add(lowestScoreColumn);
+		leaderboardTable.getColumns().add(highestScoreColumn);
 		leaderboardTable.getColumns().add(averageScoreColumn);
 
 		leaderboardTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); // Makes column widths equals

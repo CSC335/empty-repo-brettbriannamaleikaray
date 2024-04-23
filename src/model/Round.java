@@ -31,7 +31,6 @@ public class Round implements Serializable {
 		this.numOfPairs = numOfPairs;
 		this.mode = mode;
 		table = new Table(mode, category, numOfPairs);
-		// System.out.println(numOfPairs);
 		isActive = true;
 		guessHistory = new ArrayList<Guess>();
 		score = 0.0;
@@ -100,7 +99,7 @@ public class Round implements Serializable {
 	 * 
 	 * https://math.stackexchange.com/questions/1877355/how-many-turns-on-average-does-it-take-for-a-perfect-player-to-win-concentrati
 	 */
-	private void calculateScore() {
+	public void calculateScore() {
 		score = numOfMatches * 1.0 / guessHistory.size();
 	}
 
@@ -113,7 +112,33 @@ public class Round implements Serializable {
 	public Double getScore() {
 		return score;
 	}
+	
+	/**
+	 * Sets the score. Used for hardcoded accounts.
+	 * 
+	 * @param score The score for this round
+	 */
+	public void setNumOfMatches(int numOfMatches) {
+		this.numOfMatches = numOfMatches;
+	}
+	
+	/**
+	 * Sets the number of guesses. Used for hardcoded accounts.
+	 * 
+	 * @param guessCount The number of guesses we are adding to this round
+	 */
+	public void setGuesses(int guessCount) {
+		for(int i = 0; i < guessCount; i += 1) {
+			Guess tempGuess = new Guess(-1, -2); // null values
+			guessHistory.add(tempGuess);
+		}
+	}
 
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
 	public int numOfMatches() {
 		return numOfMatches;
 	}

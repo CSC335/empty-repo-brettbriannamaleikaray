@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Card;
+import model.Mode;
 import model.Table;
 
 public class TestTable extends Application {
@@ -18,7 +19,7 @@ public class TestTable extends Application {
 	public void start(Stage stage) throws Exception {
 	    GridPane pane = new GridPane();
 	    // change first parameter to change category
-	    Table table = new Table("cacti", 4);
+	    Table table = new Table(Mode.NORMAL, "cacti", 4);
 	    Card[] cards = table.getRandomizedCards();
 	    
 	    // adds randomized card images to grid pane
