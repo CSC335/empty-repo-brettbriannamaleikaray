@@ -416,7 +416,6 @@ public class Match4RoundPane extends GridPane {
 	}
 
 	private void checkCards() {
-		System.out.println("check");
 		if (curRound.isActive()) {
 			guessCount += 1;
 
