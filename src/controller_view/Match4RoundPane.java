@@ -247,7 +247,7 @@ public class Match4RoundPane extends GridPane {
 	}
 
 	private void setMouseHandler() {
-		this.setOnMousePressed(event -> {
+		this.setOnMouseClicked(event -> {
 			if (numOfCardsFlipped == 0 && gameStarted) {
 				clickedCardOne = getClickedCard(event);
 				rowOne = clickRow;
@@ -275,16 +275,7 @@ public class Match4RoundPane extends GridPane {
 				if (clickedCardThree != null && guessPos3 >= 0 && guessPos3 != guessPos1 && guessPos3 != guessPos2) {
 					flipCardThree();
 				}
-			} else if (numOfCardsFlipped == 3 && gameStarted) {
-				clickedCardFour = getClickedCard(event);
-				rowFour = clickRow;
-				colFour = clickCol;
-				cardFourIndex = rowFour * 4 + colFour;
-				guessPos4 = guessPos;
-				if (clickedCardFour != null && guessPos4 >= 0 && guessPos4 != guessPos1 && guessPos4 != guessPos2
-						&& guessPos4 != guessPos3) {
-					flipCardFour();
-				}
+			} else if (numOfCardsFlipped == 4 && gameStarted) {
 				if (clickedCardFour != null && guessPos4 >= 0 && guessPos4 != guessPos1 && guessPos4 != guessPos2
 						&& guessPos4 != guessPos3) {
 					try {
@@ -296,6 +287,19 @@ public class Match4RoundPane extends GridPane {
 				}
 			} else if (!gameStarted) {
 				gameStarted = true;
+			}
+		});
+		this.setOnMousePressed(event -> {
+			if (numOfCardsFlipped == 3 && gameStarted) {
+				clickedCardFour = getClickedCard(event);
+				rowFour = clickRow;
+				colFour = clickCol;
+				cardFourIndex = rowFour * 4 + colFour;
+				guessPos4 = guessPos;
+				if (clickedCardFour != null && guessPos4 >= 0 && guessPos4 != guessPos1 && guessPos4 != guessPos2
+						&& guessPos4 != guessPos3) {
+					flipCardFour();
+				}
 			}
 		});
 	}
@@ -364,7 +368,6 @@ public class Match4RoundPane extends GridPane {
 		// (Card Four) Changes a card's image to the image on its other side
 		if (clickedCardFour.isFlipped() == false) {
 			// Change to front image
-			System.out.println("flip");
 			cardImages.get(cardFourIndex)
 					.setImage(new Image(curRound.getCard(cardFourIndex).getFileName(), 125, 175, false, false));
 			// Add text label
@@ -413,6 +416,7 @@ public class Match4RoundPane extends GridPane {
 	}
 
 	private void checkCards() {
+		System.out.println("check");
 		if (curRound.isActive()) {
 			guessCount += 1;
 
