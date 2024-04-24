@@ -82,6 +82,7 @@ public class TimedRoundPane extends GridPane {
 	
 	// Displays the remaining time
 	private Label timerLabel = new Label();
+	AnimationTimer timer;
 	private Label loseMsg;
 
 	/**
@@ -103,7 +104,7 @@ public class TimedRoundPane extends GridPane {
 	
 	private void startCountdown() {
         LocalTime end = LocalTime.now().plusMinutes(1);
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 Duration remaining = Duration.between(LocalTime.now(), end);
@@ -467,6 +468,7 @@ public class TimedRoundPane extends GridPane {
 
 		if (!curRound.isActive()) {
 			this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
+			timer.stop();
 			// maybe remove this code now that there's a score counter
 			// System.out.println("Game finished");
 			// String score = curRound.getScore().toString();
