@@ -25,6 +25,7 @@ public class LoginPane extends GridPane {
 	private PasswordField passwordFld = new PasswordField();
 	private Button loginBtn = new Button("Login");
 	private Button createAccountBtn = new Button("Create Account");
+	private Button logoutBtn = new Button ("Log out");
 
 	// Other fields
 	private MemoryGameGUI memoryGameGUI;
@@ -49,12 +50,19 @@ public class LoginPane extends GridPane {
 	 * Insert and style GUI elements
 	 */
 	private void layoutPane() {
+		
+		// set Button colors
+		loginBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
+		createAccountBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
+		logoutBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
+		
 		this.add(usernameLbl, 0, 0);
 		this.add(usernameFld, 1, 0);
 		this.add(passwordLbl, 0, 1);
 		this.add(passwordFld, 1, 1);
 		this.add(loginBtn, 0, 2);
 		this.add(createAccountBtn, 1, 2);
+		this.add(logoutBtn, 2, 2);
 
 		this.setAlignment(Pos.CENTER);
 		this.setVgap(10);
@@ -113,6 +121,10 @@ public class LoginPane extends GridPane {
 			} else {
 				this.allAccounts.add(new Account(username, password, false));
 			}
+		});
+		
+		logoutBtn.setOnAction(e -> {
+			curAccount = null;
 		});
 	}
 

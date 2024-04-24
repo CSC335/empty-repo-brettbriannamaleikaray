@@ -67,6 +67,8 @@ public class RoundPane extends GridPane {
 	private int scoreCount = 0;
 	private int cardOneIndex = -1;
 	private int cardTwoIndex = -1;
+	private Button returnToTitle = new Button("Return to Title Screen");
+	private Button leaderBoard = new Button("Show LeaderBoard");
 
 //	private CardSet deck;
 	private String cardBackPath;
@@ -83,6 +85,7 @@ public class RoundPane extends GridPane {
 		this.memoryGame = memoryGame;
 		this.mode = mode;
 		layoutGUI();
+		registerButtons();
 		setMouseHandler();
 		cardImages = new ArrayList<ImageView>();
 
@@ -95,6 +98,8 @@ public class RoundPane extends GridPane {
 		this.setHgap(10);
 		this.setVgap(10);
 		this.setAlignment(Pos.CENTER);
+		returnToTitle.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
+		this.add(returnToTitle, 4, 1);
 
 		cacti = new ImageView(new Image("file:src/images/cardbacks/cardback_cacti.png", 125, 175, false, false));
 		cities = new ImageView(new Image("file:src/images/cardbacks/cardback_cities.png", 125, 175, false, false));
@@ -207,6 +212,12 @@ public class RoundPane extends GridPane {
 		// Set background image
 		this.setStyle("-fx-background-image: url('file:src/images/desertbackground.jpg')");
 
+	}
+	
+	private void registerButtons() {
+		returnToTitle.setOnAction(event -> {
+			memoryGame.showTitle();
+		});
 	}
 
 	private void makeFullDeck() {

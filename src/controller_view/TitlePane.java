@@ -19,7 +19,9 @@ import model.Mode;
 public class TitlePane extends BorderPane {
 
 	private MemoryGameGUI memoryGame;
-	private Button startButton = new Button("Start Game");
+	private Button startButton = new Button("Start Normal Game");
+	private Button startTimedButton = new Button("Start Timed Game");
+	private Button startMatch4Button = new Button ("Start Match 4 Game");
 	private Button leaderboardButton = new Button("Leaderboard");
 	private Button quitButton = new Button("Quit");
 	private Alert loginFirstAlt;
@@ -43,17 +45,30 @@ public class TitlePane extends BorderPane {
 
 		this.loginFirstAlt = new Alert(AlertType.ERROR, "Please login first!");
 
-		startButton.setFont(new Font(35));
+		startButton.setFont(new Font(25));
+		startTimedButton.setFont(new Font(25));
+		startMatch4Button.setFont(new Font(25));
 		leaderboardButton.setFont(new Font(20));
 		quitButton.setFont(new Font(20));
 
+		// set button colors
+		startButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
+		startTimedButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
+		startMatch4Button.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
+		leaderboardButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
+		quitButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
+		
 		buttons.setVgap(15);
 		buttons.add(startButton, 0, 0);
-		buttons.add(leaderboardButton, 0, 1);
+		buttons.add(startTimedButton, 0, 1);
+		buttons.add(startMatch4Button, 0, 2);
+		buttons.add(leaderboardButton, 0, 3);
 		startButton.setPrefWidth(300);
 		leaderboardButton.setPrefWidth(300);
 		quitButton.setPrefWidth(300);
-		buttons.add(quitButton, 0, 2);
+		startTimedButton.setPrefWidth(300);
+		startMatch4Button.setPrefWidth(300);
+		buttons.add(quitButton, 0, 4);
 		buttons.setAlignment(Pos.CENTER);
 
 		Label label = new Label("Sonoran Memory Match");
@@ -64,7 +79,7 @@ public class TitlePane extends BorderPane {
 		title.setAlignment(Pos.CENTER);
 		title.add(label, 0, 0);
 
-		loginPane.setPadding(new Insets(0, 0, 250, 0));
+		loginPane.setPadding(new Insets(15, 0, 250, 0));
 
 		this.setTop(title);
 		this.setCenter(buttons);
@@ -82,6 +97,20 @@ public class TitlePane extends BorderPane {
 				this.loginFirstAlt.show();
 			}
 		});
+		startTimedButton.setOnAction(event -> {
+			if (this.loginPane.isLoggedIn()) {
+				memoryGame.startRound(Mode.TIMED);
+			} else {
+				this.loginFirstAlt.show();
+			}
+		});
+		startMatch4Button.setOnAction(event -> {
+			if (this.loginPane.isLoggedIn()) {
+				memoryGame.startRound(Mode.MATCH4);
+			} else {
+				this.loginFirstAlt.show();
+			}
+		});
 		leaderboardButton.setOnAction(event -> {
 			if (this.loginPane.isLoggedIn()) {
 				memoryGame.showLeaderboard();
@@ -92,6 +121,7 @@ public class TitlePane extends BorderPane {
 		quitButton.setOnAction(event -> {
 			memoryGame.quit();
 		});
+		
 	}
 
 }
