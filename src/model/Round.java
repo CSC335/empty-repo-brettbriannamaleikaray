@@ -92,6 +92,14 @@ public class Round implements Serializable {
 	public boolean isActive() {
 		return isActive;
 	}
+	
+	/**
+	 * Ends the round.
+	 */
+	public void endRound() {
+		calculateScore();
+		isActive = false;
+	}
 
 	/**
 	 * Use this to initialize the score variable when a round ends. Found this post

@@ -41,7 +41,7 @@ public class TimedRoundPane extends GridPane {
 
 	private Card nullCard = new Card("null", "null");
 	private Label scoreMsg;
-	private Label winMsg;
+	private Label gameDoneMsg;
 	private Card clickedCardOne = nullCard;
 	private Card clickedCardTwo = nullCard;
 	double firstX;
@@ -82,6 +82,7 @@ public class TimedRoundPane extends GridPane {
 	
 	// Displays the remaining time
 	private Label timerLabel = new Label();
+	private Label loseMsg;
 
 	/**
 	 * Constructs a new RoundPane
@@ -111,6 +112,14 @@ public class TimedRoundPane extends GridPane {
                 } else {
                     timerLabel.setText(format(Duration.ZERO));
                     stop();
+                    curRound.endRound();
+        			for (int i = 0; i < 16; i++) {
+        				curRound.getCard(i).destroyCard();
+        				TimedRoundPane.this.getChildren().removeAll();
+        			}
+        			gameDoneMsg = new Label("YOU LOSE!");
+        			TimedRoundPane.this.add(gameDoneMsg, 2, 1);
+        			TimedRoundPane.this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
                 }
             }
 
@@ -463,8 +472,8 @@ public class TimedRoundPane extends GridPane {
 			// String score = curRound.getScore().toString();
 			// scoreMsg = new Label("Your score: " + score);
 			// this.add(scoreMsg, 0, 4);
-			winMsg = new Label("You Win!");
-			this.add(winMsg, 2, 1);
+			gameDoneMsg = new Label("You Win!");
+			this.add(gameDoneMsg, 2, 1);
 		}
 
 		stats.setText("guesses: " + guessCount + "\nscore: " + scoreCount);
