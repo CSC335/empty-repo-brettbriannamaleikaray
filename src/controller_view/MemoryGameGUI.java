@@ -103,7 +103,12 @@ public class MemoryGameGUI extends Application {
 	 * @param mode  the game mode of the round to start
 	 */
 	public void startRound(Mode mode) {
-		pane.setCenter(new RoundPane(this, mode));
+		if (mode == Mode.TIMED) {
+			pane.setCenter(new TimedRoundPane(this, mode));
+		}
+		else {
+			pane.setCenter(new RoundPane(this, mode));
+		}
 	}
 
 	private void startupPreamble() {
