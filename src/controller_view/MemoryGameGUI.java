@@ -72,6 +72,7 @@ public class MemoryGameGUI extends Application {
 	}
 
 	public void setLeaderboardPane(LeaderboardPane leaderboardPane) {
+		leaderboardPane = new LeaderboardPane(this, loginPane);
 		this.leaderboardPane = leaderboardPane;
 	}
 
@@ -87,6 +88,7 @@ public class MemoryGameGUI extends Application {
 	 * Goes to the Leaderboard screen by displaying LeaderboardPane
 	 */
 	public void showLeaderboard() {
+		leaderboardPane = new LeaderboardPane(this, loginPane);
 		pane.setCenter(leaderboardPane);
 	}
 
@@ -106,8 +108,10 @@ public class MemoryGameGUI extends Application {
 		if (mode == Mode.TIMED) {
 			pane.setCenter(new TimedRoundPane(this, mode));
 		}
-		else {
+		else if (mode == Mode.NORMAL) {
 			pane.setCenter(new RoundPane(this, mode));
+		} else if (mode == Mode.MATCH4) {
+			pane.setCenter(new Match4RoundPane(this, mode));
 		}
 	}
 
