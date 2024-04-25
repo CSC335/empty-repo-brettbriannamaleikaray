@@ -56,7 +56,7 @@ public class UserStatsPane extends BorderPane {
 		newStatsList.getItems().add("Rounds Played: " + loginPane.getCurrentAccount().getRoundsPlayed());
 		newStatsList.getItems().add("Total Wins: " + loginPane.getCurrentAccount().getTotalWins());
 		newStatsList.getItems().add("Average Score: " + loginPane.getCurrentAccount().getAverageScore());
-		newStatsList.getItems().add("Lowest Score: " + loginPane.getCurrentAccount().getHighestScore());
+		newStatsList.getItems().add("Highest Score: " + loginPane.getCurrentAccount().getHighestScore());
 
 		// Set size
 		newStatsList.setMaxWidth(300);

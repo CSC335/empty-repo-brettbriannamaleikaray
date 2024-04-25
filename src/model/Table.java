@@ -47,14 +47,15 @@ public class Table {
 		// array
 		// if match 4 mode adds 4 of each random card to the randomCards array
 		for (int i = 0; i < numOfPairs; i++) {
+			Card card = tempCards.get(i);
 			if (mode == Mode.NORMAL || mode == Mode.TIMED) {
-				randomizedCards[i*2] = tempCards.get(i);
-				randomizedCards[i*2+1] = tempCards.get(i);
+				randomizedCards[i*2] = new Card(card.getName(), card.getFileName());
+				randomizedCards[i*2+1] = new Card(card.getName(), card.getFileName());
 			} else {
-				randomizedCards[i*4] = tempCards.get(i);
-				randomizedCards[i*4+1] = tempCards.get(i);
-				randomizedCards[i*4+2] = tempCards.get(i);
-				randomizedCards[i*4+3] = tempCards.get(i);
+				randomizedCards[i*4] = new Card(card.getName(), card.getFileName());
+				randomizedCards[i*4+1] = new Card(card.getName(), card.getFileName());
+				randomizedCards[i*4+2] = new Card(card.getName(), card.getFileName());
+				randomizedCards[i*4+3] = new Card(card.getName(), card.getFileName());
 			}
 		}
 		// shuffle randomizedCards array

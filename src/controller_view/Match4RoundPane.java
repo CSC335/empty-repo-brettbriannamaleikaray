@@ -2,26 +2,18 @@ package controller_view;
 
 import java.util.ArrayList;
 
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 import model.Card;
 import model.Guess;
 import model.Mode;
@@ -33,13 +25,15 @@ import model.Round;
  * and the game begins. As the game is played the number of guesses and a score
  * is kept. Once all the card pairs have been found the round ends.
  */
-public class RoundPane extends GridPane {
+public class Match4RoundPane extends GridPane {
 
 	private Card nullCard = new Card("null", "null");
 	private Label scoreMsg;
 	private Label winMsg;
 	private Card clickedCardOne = nullCard;
 	private Card clickedCardTwo = nullCard;
+	private Card clickedCardThree = nullCard;
+	private Card clickedCardFour = nullCard;
 	double firstX;
 	double firstY;
 	double clickX;
@@ -48,12 +42,18 @@ public class RoundPane extends GridPane {
 	private int clickCol;
 	private int rowOne;
 	private int rowTwo;
+	private int rowThree;
+	private int rowFour;
 	private int colOne;
 	private int colTwo;
+	private int colThree;
+	private int colFour;
 	private int guessPos;
 	private int guessPos1;
 	private int guessPos2;
-	private boolean firstGuess = true;
+	private int guessPos3;
+	private int guessPos4;
+	private int numOfCardsFlipped = 0;
 	private Label[] textLabels = new Label[16];
 	private ArrayList<ImageView> cardImages;
 	private ImageView cacti;
@@ -67,6 +67,8 @@ public class RoundPane extends GridPane {
 	private int scoreCount = 0;
 	private int cardOneIndex = -1;
 	private int cardTwoIndex = -1;
+	private int cardThreeIndex = -1;
+	private int cardFourIndex = -1;
 	private Button returnToTitle = new Button("Return to Title Screen");
 	private Button leaderBoard = new Button("Show LeaderBoard");
 
@@ -81,7 +83,7 @@ public class RoundPane extends GridPane {
 	 * 
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 */
-	public RoundPane(MemoryGameGUI memoryGame, Mode mode) {
+	public Match4RoundPane(MemoryGameGUI memoryGame, Mode mode) {
 		this.memoryGame = memoryGame;
 		this.mode = mode;
 		layoutGUI();
@@ -126,7 +128,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "cacti", 8);
+				curRound = new Round(mode, "cacti", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_cacti.png";
 				makeFullDeck();
 			}
@@ -145,7 +147,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "cities", 8);
+				curRound = new Round(mode, "cities", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
 				makeFullDeck();
 			}
@@ -164,7 +166,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "mammals", 8);
+				curRound = new Round(mode, "mammals", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 				makeFullDeck();
 			}
@@ -183,7 +185,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "mountains", 8);
+				curRound = new Round(mode, "mountains", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
 				makeFullDeck();
 			}
@@ -202,7 +204,7 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "reptiles", 8);
+				curRound = new Round(mode, "reptiles", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
 				makeFullDeck();
 			}
@@ -213,7 +215,7 @@ public class RoundPane extends GridPane {
 		this.setStyle("-fx-background-image: url('file:src/images/desertbackground.jpg')");
 
 	}
-	
+
 	private void registerButtons() {
 		returnToTitle.setOnAction(event -> {
 			memoryGame.showTitle();
@@ -246,9 +248,7 @@ public class RoundPane extends GridPane {
 
 	private void setMouseHandler() {
 		this.setOnMouseClicked(event -> {
-
-			if (firstGuess && gameStarted) {
-				firstGuess = false;
+			if (numOfCardsFlipped == 0 && gameStarted) {
 				clickedCardOne = getClickedCard(event);
 				rowOne = clickRow;
 				colOne = clickCol;
@@ -256,88 +256,132 @@ public class RoundPane extends GridPane {
 				guessPos1 = guessPos;
 				if (clickedCardOne != null && guessPos1 >= 0) {
 					flipCardOne();
-				} else {
-					firstGuess = true;
 				}
-			} else {
-				if (gameStarted) {
-					if (clickedCardTwo != null && guessPos1 != guessPos2) {
-						firstGuess = true;
-						try {
-							Thread.sleep(1250);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						checkCards();
-					}
-				} else {
-					gameStarted = true;
-				}
-			}
-
-		});
-
-		this.setOnMousePressed(event -> {
-
-			if (!firstGuess) {
-
+			} else if (numOfCardsFlipped == 1 && gameStarted) {
 				clickedCardTwo = getClickedCard(event);
 				rowTwo = clickRow;
 				colTwo = clickCol;
 				cardTwoIndex = rowTwo * 4 + colTwo;
 				guessPos2 = guessPos;
-
-				// Flip 2nd card face up
-				if (clickedCardTwo != null && clickedCardTwo != clickedCardOne && guessPos2 >= 0) {
+				if (clickedCardTwo != null && guessPos2 >= 0 && guessPos2 != guessPos1) {
 					flipCardTwo();
+				}
+			} else if (numOfCardsFlipped == 2 && gameStarted) {
+				clickedCardThree = getClickedCard(event);
+				rowThree = clickRow;
+				colThree = clickCol;
+				cardThreeIndex = rowThree * 4 + colThree;
+				guessPos3 = guessPos;
+				if (clickedCardThree != null && guessPos3 >= 0 && guessPos3 != guessPos1 && guessPos3 != guessPos2) {
+					flipCardThree();
+				}
+			} else if (numOfCardsFlipped == 4 && gameStarted) {
+				if (clickedCardFour != null && guessPos4 >= 0 && guessPos4 != guessPos1 && guessPos4 != guessPos2
+						&& guessPos4 != guessPos3) {
+					try {
+						Thread.sleep(1250);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					checkCards();
+				}
+			} else if (!gameStarted) {
+				gameStarted = true;
+			}
+		});
+		this.setOnMousePressed(event -> {
+			if (numOfCardsFlipped == 3 && gameStarted) {
+				clickedCardFour = getClickedCard(event);
+				rowFour = clickRow;
+				colFour = clickCol;
+				cardFourIndex = rowFour * 4 + colFour;
+				guessPos4 = guessPos;
+				if (clickedCardFour != null && guessPos4 >= 0 && guessPos4 != guessPos1 && guessPos4 != guessPos2
+						&& guessPos4 != guessPos3) {
+					flipCardFour();
 				}
 			}
 		});
-
 	}
 
 	private void flipCardOne() {
 		// (Card One) Changes a card's image to the image on its other side
-
 		if (clickedCardOne.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardOneIndex)
 					.setImage(new Image(curRound.getCard(cardOneIndex).getFileName(), 125, 175, false, false));
-
 			// Add text label
 			this.add(textLabels[cardOneIndex], colOne, rowOne);
+			numOfCardsFlipped += 1;
 		} else if (clickedCardOne.isFlipped() == true) {
 			// Change to back image
 			cardImages.get(cardOneIndex).setImage(new Image(cardBackPath, 125, 175, false, false));
-
 			// Remove text label
 			this.getChildren().remove(textLabels[cardOneIndex]);
+			numOfCardsFlipped -= 1;
 		}
-
 		// Update flip status
 		clickedCardOne.flipCard();
 	}
 
 	private void flipCardTwo() {
 		// (Card Two) Changes a card's image to the image on its other side
-
 		if (clickedCardTwo.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardTwoIndex)
 					.setImage(new Image(curRound.getCard(cardTwoIndex).getFileName(), 125, 175, false, false));
-
 			// Add text label
 			this.add(textLabels[cardTwoIndex], colTwo, rowTwo);
+			numOfCardsFlipped += 1;
 		} else if (clickedCardTwo.isFlipped() == true) {
 			// Change to back image
 			cardImages.get(cardTwoIndex).setImage(new Image(cardBackPath, 125, 175, false, false));
-
 			// Remove text label
 			this.getChildren().remove(textLabels[cardTwoIndex]);
+			numOfCardsFlipped -= 1;
 		}
-
 		// Update flip status
 		clickedCardTwo.flipCard();
+	}
+
+	private void flipCardThree() {
+		// (Card Three) Changes a card's image to the image on its other side
+		if (clickedCardThree.isFlipped() == false) {
+			// Change to front image
+			cardImages.get(cardThreeIndex)
+					.setImage(new Image(curRound.getCard(cardThreeIndex).getFileName(), 125, 175, false, false));
+			// Add text label
+			this.add(textLabels[cardThreeIndex], colThree, rowThree);
+			numOfCardsFlipped += 1;
+		} else if (clickedCardThree.isFlipped() == true) {
+			// Change to back image
+			cardImages.get(cardThreeIndex).setImage(new Image(cardBackPath, 125, 175, false, false));
+			// Remove text label
+			this.getChildren().remove(textLabels[cardThreeIndex]);
+			numOfCardsFlipped -= 1;
+		}
+		// Update flip status
+		clickedCardThree.flipCard();
+	}
+
+	private void flipCardFour() {
+		// (Card Four) Changes a card's image to the image on its other side
+		if (clickedCardFour.isFlipped() == false) {
+			// Change to front image
+			cardImages.get(cardFourIndex)
+					.setImage(new Image(curRound.getCard(cardFourIndex).getFileName(), 125, 175, false, false));
+			// Add text label
+			this.add(textLabels[cardFourIndex], colFour, rowFour);
+			numOfCardsFlipped += 1;
+		} else if (clickedCardFour.isFlipped() == true) {
+			// Change to back image
+			cardImages.get(cardFourIndex).setImage(new Image(cardBackPath, 125, 175, false, false));
+			// Remove text label
+			this.getChildren().remove(textLabels[cardFourIndex]);
+			numOfCardsFlipped -= 1;
+		}
+		// Update flip status
+		clickedCardFour.flipCard();
 	}
 
 	private Card getClickedCard(MouseEvent event) {
@@ -375,40 +419,57 @@ public class RoundPane extends GridPane {
 		if (curRound.isActive()) {
 			guessCount += 1;
 
-			if (!clickedCardOne.equals(nullCard) && !clickedCardTwo.equals(nullCard)) {
-				Guess guess = new Guess(guessPos1, guessPos2);
+			if (!clickedCardOne.equals(nullCard) && !clickedCardTwo.equals(nullCard)
+					&& !clickedCardThree.equals(nullCard) && !clickedCardFour.equals(nullCard)) {
+				Guess guess = new Guess(guessPos1, guessPos2, guessPos3, guessPos4);
 				curRound.makeGuess(guess);
 				// see if cards match
-				if (clickedCardOne.getName().equals(clickedCardTwo.getName())) {
+				if (clickedCardOne.getName().equals(clickedCardTwo.getName())
+						&& clickedCardTwo.getName().equals(clickedCardThree.getName())
+						&& clickedCardThree.getName().equals(clickedCardFour.getName())) {
 					// Match confirmed
-
 					// Set card's destroyed flag so it's unclickable
 					curRound.getCard(cardOneIndex).destroyCard();
 					curRound.getCard(cardTwoIndex).destroyCard();
+					curRound.getCard(cardThreeIndex).destroyCard();
+					curRound.getCard(cardFourIndex).destroyCard();
+					numOfCardsFlipped = 0;
 
 					// Set the card's image to be a transparent placeholder image
 					cardImages.get(cardOneIndex)
 							.setImage(new Image("file:src/images/emptycard.png", 125, 175, false, false));
 					cardImages.get(cardTwoIndex)
 							.setImage(new Image("file:src/images/emptycard.png", 125, 175, false, false));
+					cardImages.get(cardThreeIndex)
+							.setImage(new Image("file:src/images/emptycard.png", 125, 175, false, false));
+					cardImages.get(cardFourIndex)
+							.setImage(new Image("file:src/images/emptycard.png", 125, 175, false, false));
 
 					// Remove card text
 					this.getChildren().remove(textLabels[cardOneIndex]);
 					this.getChildren().remove(textLabels[cardTwoIndex]);
+					this.getChildren().remove(textLabels[cardThreeIndex]);
+					this.getChildren().remove(textLabels[cardFourIndex]);
 
 					// Increase score
 					scoreCount += 1;
 
 				} else {
 					// No match
-
 					// Flip cards back over, reset click variables, remove text labels
 					flipCardOne();
 					flipCardTwo();
+					flipCardThree();
+					flipCardFour();
+					numOfCardsFlipped = 0;
 					clickedCardOne = nullCard;
 					clickedCardTwo = nullCard;
+					clickedCardThree = nullCard;
+					clickedCardFour = nullCard;
 					this.getChildren().remove(textLabels[cardOneIndex]);
 					this.getChildren().remove(textLabels[cardTwoIndex]);
+					this.getChildren().remove(textLabels[cardThreeIndex]);
+					this.getChildren().remove(textLabels[cardFourIndex]);
 				}
 			}
 		}
