@@ -56,9 +56,16 @@ public class Round implements Serializable {
 		if (isMatch(guess)) {
 			numOfMatches++;
 		}
-		if (numOfMatches == numOfPairs) {
-			isActive = false;
-			calculateScore();
+		if (mode == Mode.EASY) {
+			if (numOfMatches == numOfPairs * 2) {
+				isActive = false;
+				calculateScore();
+			}
+		} else {
+			if (numOfMatches == numOfPairs) {
+				isActive = false;
+				calculateScore();
+			}
 		}
 	}
 
@@ -69,7 +76,7 @@ public class Round implements Serializable {
 	 * @return true if guess matched, false if not
 	 */
 	private boolean isMatch(Guess guess) {
-		if (mode == Mode.NORMAL || mode == Mode.TIMED) {
+		if (mode == Mode.NORMAL || mode == Mode.TIMED || mode == Mode.EASY) {
 			Card firstCard = table.getCard(guess.getFirst());
 			Card secondCard = table.getCard(guess.getSecond());
 			return firstCard.getName() == secondCard.getName();

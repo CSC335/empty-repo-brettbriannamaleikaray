@@ -126,7 +126,11 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "cacti", 8);
+				if (mode == Mode.EASY) {
+					curRound = new Round(mode, "cacti", 4);
+				} else {
+					curRound = new Round(mode, "cacti", 8);
+				}
 				cardBackPath = "file:src/images/cardbacks/cardback_cacti.png";
 				makeFullDeck();
 			}
@@ -145,7 +149,11 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "cities", 8);
+				if (mode == Mode.EASY) {
+					curRound = new Round(mode, "cities", 4);
+				} else {
+					curRound = new Round(mode, "cities", 8);
+				}
 				cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
 				makeFullDeck();
 			}
@@ -164,7 +172,11 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "mammals", 8);
+				if (mode == Mode.EASY) {
+					curRound = new Round(mode, "mammals", 4);
+				} else {
+					curRound = new Round(mode, "mammals", 8);
+				}
 				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 				makeFullDeck();
 			}
@@ -183,7 +195,11 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "mountains", 8);
+				if (mode == Mode.EASY) {
+					curRound = new Round(mode, "mountains", 4);
+				} else {
+					curRound = new Round(mode, "mountains", 8);
+				}
 				cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
 				makeFullDeck();
 			}
@@ -202,7 +218,11 @@ public class RoundPane extends GridPane {
 			 */
 			@Override
 			public void handle(MouseEvent event) {
-				curRound = new Round(mode, "reptiles", 8);
+				if (mode == Mode.EASY) {
+					curRound = new Round(mode, "reptiles", 4);
+				} else {
+					curRound = new Round(mode, "reptiles", 8);
+				}
 				cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
 				makeFullDeck();
 			}

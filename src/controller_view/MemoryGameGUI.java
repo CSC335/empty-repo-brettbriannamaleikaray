@@ -108,7 +108,7 @@ public class MemoryGameGUI extends Application {
 		if (mode == Mode.TIMED) {
 			pane.setCenter(new TimedRoundPane(this, mode));
 		}
-		else if (mode == Mode.NORMAL) {
+		else if (mode == Mode.NORMAL || mode == Mode.EASY) {
 			pane.setCenter(new RoundPane(this, mode));
 		} else if (mode == Mode.MATCH4) {
 			pane.setCenter(new Match4RoundPane(this, mode));

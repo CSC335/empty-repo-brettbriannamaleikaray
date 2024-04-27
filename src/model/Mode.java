@@ -1,5 +1,5 @@
 package model;
 
 public enum Mode {
-	NORMAL, TIMED, MATCH4
+	NORMAL, TIMED, MATCH4, EASY
 }

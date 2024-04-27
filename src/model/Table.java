@@ -28,7 +28,7 @@ public class Table {
 		this.mode = mode;
 		if (mode == Mode.NORMAL || mode == Mode.TIMED) {
 			randomizedCards = new Card[numOfPairs*2];
-		} else if (mode == Mode.MATCH4) {
+		} else if (mode == mode.EASY || mode == Mode.MATCH4) {
 			randomizedCards = new Card[numOfPairs*4];
 		}
 		randomizeCards();
@@ -51,7 +51,7 @@ public class Table {
 			if (mode == Mode.NORMAL || mode == Mode.TIMED) {
 				randomizedCards[i*2] = new Card(card.getName(), card.getFileName());
 				randomizedCards[i*2+1] = new Card(card.getName(), card.getFileName());
-			} else {
+			} else if (mode == Mode.EASY || mode == Mode.MATCH4){
 				randomizedCards[i*4] = new Card(card.getName(), card.getFileName());
 				randomizedCards[i*4+1] = new Card(card.getName(), card.getFileName());
 				randomizedCards[i*4+2] = new Card(card.getName(), card.getFileName());

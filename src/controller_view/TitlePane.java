@@ -20,6 +20,7 @@ public class TitlePane extends BorderPane {
 
 	private MemoryGameGUI memoryGame;
 	private Button startButton = new Button("Start Normal Game");
+	private Button startEasyButton = new Button("Start Easy Game");
 	private Button startTimedButton = new Button("Start Timed Game");
 	private Button startMatch4Button = new Button ("Start Match 4 Game");
 	private Button leaderboardButton = new Button("Leaderboard");
@@ -46,6 +47,7 @@ public class TitlePane extends BorderPane {
 		this.loginFirstAlt = new Alert(AlertType.ERROR, "Please login first!");
 
 		startButton.setFont(new Font(25));
+		startEasyButton.setFont(new Font(25));
 		startTimedButton.setFont(new Font(25));
 		startMatch4Button.setFont(new Font(25));
 		leaderboardButton.setFont(new Font(20));
@@ -53,6 +55,7 @@ public class TitlePane extends BorderPane {
 
 		// set button colors
 		startButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
+		startEasyButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
 		startTimedButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
 		startMatch4Button.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
 		leaderboardButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
@@ -60,15 +63,17 @@ public class TitlePane extends BorderPane {
 		
 		buttons.setVgap(15);
 		buttons.add(startButton, 0, 0);
-		buttons.add(startTimedButton, 0, 1);
-		buttons.add(startMatch4Button, 0, 2);
-		buttons.add(leaderboardButton, 0, 3);
+		buttons.add(startEasyButton, 0, 1);
+		buttons.add(startTimedButton, 0, 2);
+		buttons.add(startMatch4Button, 0, 3);
+		buttons.add(leaderboardButton, 0, 4);
 		startButton.setPrefWidth(300);
+		startEasyButton.setPrefWidth(300);
 		leaderboardButton.setPrefWidth(300);
 		quitButton.setPrefWidth(300);
 		startTimedButton.setPrefWidth(300);
 		startMatch4Button.setPrefWidth(300);
-		buttons.add(quitButton, 0, 4);
+		buttons.add(quitButton, 0, 5);
 		buttons.setAlignment(Pos.CENTER);
 
 		Label label = new Label("Sonoran Memory Match");
@@ -93,6 +98,13 @@ public class TitlePane extends BorderPane {
 		startButton.setOnAction(event -> {
 			if (this.loginPane.isLoggedIn()) {
 				memoryGame.startRound(Mode.NORMAL);
+			} else {
+				this.loginFirstAlt.show();
+			}
+		});
+		startEasyButton.setOnAction(event -> {
+			if (this.loginPane.isLoggedIn()) {
+				memoryGame.startRound(Mode.EASY);
 			} else {
 				this.loginFirstAlt.show();
 			}
