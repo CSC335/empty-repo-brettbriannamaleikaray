@@ -1,7 +1,9 @@
 package controller_view;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
-
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -11,6 +13,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,7 +40,7 @@ public class RoundPane extends GridPane {
 
 	private Card nullCard = new Card("null", "null");
 	private Label scoreMsg;
-	private Label winMsg;
+	private Label gameDoneMsg;
 	private Card clickedCardOne = nullCard;
 	private Card clickedCardTwo = nullCard;
 	double firstX;
@@ -76,6 +79,11 @@ public class RoundPane extends GridPane {
 	private MemoryGameGUI memoryGame;
 	private Mode mode;
 
+	// In TimedRound mode, displays the remaining time
+	private Label timerLabel = new Label();
+	AnimationTimer timer;
+	private Label loseMsg;
+
 	/**
 	 * Constructs a new RoundPane
 	 * 
@@ -91,6 +99,44 @@ public class RoundPane extends GridPane {
 
 		// Load CSS for text labels
 		this.getStylesheets().addAll(getClass().getResource("TextOutline.css").toExternalForm());
+	}
+
+	private void startCountdown() {
+
+		LocalTime end = LocalTime.now().plusMinutes(1);
+
+		timer = new AnimationTimer() {
+
+			@Override
+
+			public void handle(long l) {
+
+				Duration remaining = Duration.between(LocalTime.now(), end);
+				if (!remaining.isNegative()) {
+					timerLabel.setText(format(remaining));
+				} else {
+					timerLabel.setText(format(Duration.ZERO));
+					stop();
+					curRound.endRound();
+
+					for (int i = 0; i < 16; i++) {
+						curRound.getCard(i).destroyCard();
+						RoundPane.this.getChildren().removeAll();
+					}
+
+					gameDoneMsg = new Label("YOU LOSE!");
+					RoundPane.this.add(gameDoneMsg, 2, 1);
+					RoundPane.this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
+				}
+
+			}
+
+			private String format(Duration remaining) {
+				return String.format("%02d:%02d:%02d", remaining.toHoursPart(), remaining.toMinutesPart(),
+						remaining.toSecondsPart());
+			}
+		};
+		timer.start();
 	}
 
 	private void layoutGUI() {
@@ -129,8 +175,10 @@ public class RoundPane extends GridPane {
 				if (mode == Mode.EASY) {
 					curRound = new Round(mode, "cacti", 4);
 				} else {
+					// Used for TIMED and NORMAL modes
 					curRound = new Round(mode, "cacti", 8);
 				}
+				
 				cardBackPath = "file:src/images/cardbacks/cardback_cacti.png";
 				makeFullDeck();
 			}
@@ -150,10 +198,12 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "cities", 4);
+					curRound = new Round(mode, "cacti", 4);
 				} else {
-					curRound = new Round(mode, "cities", 8);
+					// Used for TIMED and NORMAL modes
+					curRound = new Round(mode, "cacti", 8);
 				}
+				
 				cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
 				makeFullDeck();
 			}
@@ -173,10 +223,12 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "mammals", 4);
+					curRound = new Round(mode, "cacti", 4);
 				} else {
-					curRound = new Round(mode, "mammals", 8);
+					// Used for TIMED and NORMAL modes
+					curRound = new Round(mode, "cacti", 8);
 				}
+				
 				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 				makeFullDeck();
 			}
@@ -196,10 +248,12 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "mountains", 4);
+					curRound = new Round(mode, "cacti", 4);
 				} else {
-					curRound = new Round(mode, "mountains", 8);
+					// Used for TIMED and NORMAL modes
+					curRound = new Round(mode, "cacti", 8);
 				}
+				
 				cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
 				makeFullDeck();
 			}
@@ -219,10 +273,12 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "reptiles", 4);
+					curRound = new Round(mode, "cacti", 4);
 				} else {
-					curRound = new Round(mode, "reptiles", 8);
+					// Used for TIMED and NORMAL modes
+					curRound = new Round(mode, "cacti", 8);
 				}
+				
 				cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
 				makeFullDeck();
 			}
@@ -233,7 +289,7 @@ public class RoundPane extends GridPane {
 		this.setStyle("-fx-background-image: url('file:src/images/desertbackground.jpg')");
 
 	}
-	
+
 	private void registerButtons() {
 		returnToTitle.setOnAction(event -> {
 			memoryGame.showTitle();
@@ -254,6 +310,13 @@ public class RoundPane extends GridPane {
 		// add label
 		this.add(stats, 4, 0);
 
+		// Timed Mode - Timer
+		if(mode == Mode.TIMED) {
+			this.add(timerLabel, 4, 2);
+
+			startCountdown();
+		}
+		
 		// add card text label
 		for (int i = 0; i < 16; i += 1) {
 			textLabels[i] = getCardTextLabel(curRound.getCard(i).getName(), 125, 175);
@@ -434,14 +497,17 @@ public class RoundPane extends GridPane {
 		}
 
 		if (!curRound.isActive()) {
+			if(mode == Mode.TIMED)
+				timer.stop();
+			
 			this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
 			// maybe remove this code now that there's a score counter
 			// System.out.println("Game finished");
 			// String score = curRound.getScore().toString();
 			// scoreMsg = new Label("Your score: " + score);
 			// this.add(scoreMsg, 0, 4);
-			winMsg = new Label("You Win!");
-			this.add(winMsg, 2, 1);
+			gameDoneMsg = new Label("You Win!");
+			this.add(gameDoneMsg, 2, 1);
 		}
 
 		stats.setText("guesses: " + guessCount + "\nscore: " + scoreCount);
