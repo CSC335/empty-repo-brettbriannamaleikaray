@@ -194,10 +194,10 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "cacti", 4);
+					curRound = new Round(mode, "cities", 4);
 				} else {
 					// Used for TIMED and NORMAL modes
-					curRound = new Round(mode, "cacti", 8);
+					curRound = new Round(mode, "cities", 8);
 				}
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
@@ -220,10 +220,10 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "cacti", 4);
+					curRound = new Round(mode, "mammals", 4);
 				} else {
 					// Used for TIMED and NORMAL modes
-					curRound = new Round(mode, "cacti", 8);
+					curRound = new Round(mode, "mammals", 8);
 				}
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
@@ -246,10 +246,10 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "cacti", 4);
+					curRound = new Round(mode, "mountains", 4);
 				} else {
 					// Used for TIMED and NORMAL modes
-					curRound = new Round(mode, "cacti", 8);
+					curRound = new Round(mode, "mountains", 8);
 				}
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
@@ -272,10 +272,10 @@ public class RoundPane extends GridPane {
 			@Override
 			public void handle(MouseEvent event) {
 				if (mode == Mode.EASY) {
-					curRound = new Round(mode, "cacti", 4);
+					curRound = new Round(mode, "reptiles", 4);
 				} else {
 					// Used for TIMED and NORMAL modes
-					curRound = new Round(mode, "cacti", 8);
+					curRound = new Round(mode, "reptiles", 8);
 				}
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
