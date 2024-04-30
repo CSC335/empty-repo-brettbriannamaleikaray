@@ -2,6 +2,7 @@ package controller_view;
 
 import java.util.ArrayList;
 
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import model.Account;
 import model.AccountCollection;
+import model.SoundPlayer;
 
 /**
  * The login pane of our GUI; a place for users to login or create an account
@@ -26,6 +28,7 @@ public class LoginPane extends GridPane {
 	private Button loginBtn = new Button("Login");
 	private Button createAccountBtn = new Button("Create Account");
 	private Button logoutBtn = new Button ("Log out");
+	private SoundPlayer soundPlayer;
 
 	// Other fields
 	private MemoryGameGUI memoryGameGUI;
@@ -36,10 +39,11 @@ public class LoginPane extends GridPane {
 	 * 
 	 * @param memoryGameGUI
 	 */
-	public LoginPane(MemoryGameGUI memoryGameGUI) {
+	public LoginPane(MemoryGameGUI memoryGameGUI, SoundPlayer soundPlayer) {
 		this.memoryGameGUI = memoryGameGUI;
 		this.curAccount = null;
 		this.allAccounts = new AccountCollection();
+		this.soundPlayer = soundPlayer;
 
 		addDefaultAccounts();
 		layoutPane();
@@ -93,6 +97,7 @@ public class LoginPane extends GridPane {
 	 */
 	private void setHandlers() {
 		loginBtn.setOnAction(e -> {
+			soundPlayer.playSound("snd_button_click.wav");
 			String username = usernameFld.getText();
 			String password = passwordFld.getText();
 			usernameFld.setText("");
@@ -100,7 +105,7 @@ public class LoginPane extends GridPane {
 			this.curAccount = this.allAccounts.findAccount(username, password);
 			if (this.curAccount != null) {
 				LeaderboardPane newLeaderboardPane;
-				newLeaderboardPane = new LeaderboardPane(memoryGameGUI, this);
+				newLeaderboardPane = new LeaderboardPane(memoryGameGUI, this, soundPlayer);
 				this.memoryGameGUI.setLeaderboardPane(newLeaderboardPane);
 			} else {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -110,6 +115,7 @@ public class LoginPane extends GridPane {
 		});
 
 		createAccountBtn.setOnAction(e -> {
+			soundPlayer.playSound("snd_button_click.wav");
 			String username = usernameFld.getText();
 			String password = passwordFld.getText();
 			usernameFld.setText("");
@@ -124,7 +130,33 @@ public class LoginPane extends GridPane {
 		});
 		
 		logoutBtn.setOnAction(e -> {
+			soundPlayer.playSound("snd_button_click.wav");
 			curAccount = null;
+		});
+		
+		loginBtn.hoverProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean unused, Boolean hover) -> {
+		      if (hover) {
+		    	  loginBtn.setStyle("-fx-background-color: #fdf7ed; -fx-text-fill: black;");
+		    	  soundPlayer.playSound("snd_button_hover.wav");
+		      } else {
+		    	  loginBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
+		      }
+		});
+		createAccountBtn.hoverProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean unused, Boolean hover) -> {
+		      if (hover) {
+		    	  createAccountBtn.setStyle("-fx-background-color: #fdf7ed; -fx-text-fill: black;");
+		    	  soundPlayer.playSound("snd_button_hover.wav");
+		      } else {
+		    	  createAccountBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
+		      }
+		});
+		logoutBtn.hoverProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean unused, Boolean hover) -> {
+		      if (hover) {
+		    	  logoutBtn.setStyle("-fx-background-color: #fdf7ed; -fx-text-fill: black;");
+		    	  soundPlayer.playSound("snd_button_hover.wav");
+		      } else {
+		    	  logoutBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
+		      }
 		});
 	}
 

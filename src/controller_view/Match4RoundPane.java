@@ -1,7 +1,9 @@
 package controller_view;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -18,6 +20,7 @@ import model.Card;
 import model.Guess;
 import model.Mode;
 import model.Round;
+import model.SoundPlayer;
 
 /**
  * Starts a new Round of the Memory Game. It first shows 5 card backs that
@@ -71,6 +74,7 @@ public class Match4RoundPane extends GridPane {
 	private int cardFourIndex = -1;
 	private Button returnToTitle = new Button("Return to Title Screen");
 	private Button leaderBoard = new Button("Show LeaderBoard");
+	private SoundPlayer soundPlayer;
 
 //	private CardSet deck;
 	private String cardBackPath;
@@ -83,9 +87,10 @@ public class Match4RoundPane extends GridPane {
 	 * 
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 */
-	public Match4RoundPane(MemoryGameGUI memoryGame, Mode mode) {
+	public Match4RoundPane(MemoryGameGUI memoryGame, Mode mode, SoundPlayer soundPlayer) {
 		this.memoryGame = memoryGame;
 		this.mode = mode;
+		this.soundPlayer = soundPlayer;
 		layoutGUI();
 		registerButtons();
 		setMouseHandler();
@@ -131,6 +136,7 @@ public class Match4RoundPane extends GridPane {
 				curRound = new Round(mode, "cacti", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_cacti.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -150,6 +156,7 @@ public class Match4RoundPane extends GridPane {
 				curRound = new Round(mode, "cities", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -169,6 +176,7 @@ public class Match4RoundPane extends GridPane {
 				curRound = new Round(mode, "mammals", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -188,6 +196,7 @@ public class Match4RoundPane extends GridPane {
 				curRound = new Round(mode, "mountains", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -207,6 +216,7 @@ public class Match4RoundPane extends GridPane {
 				curRound = new Round(mode, "reptiles", 4);
 				cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -218,7 +228,18 @@ public class Match4RoundPane extends GridPane {
 
 	private void registerButtons() {
 		returnToTitle.setOnAction(event -> {
+			soundPlayer.playSound("snd_button_click.wav");
 			memoryGame.showTitle();
+		});
+		
+		//Button hover
+		returnToTitle.hoverProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean unused, Boolean hover) -> {
+		      if (hover) {
+		    	  returnToTitle.setStyle("-fx-background-color: #fdf7ed; -fx-text-fill: black;");
+		    	  soundPlayer.playSound("snd_button_hover.wav");
+		      } else {
+		    	  returnToTitle.setStyle("-fx-background-color: #FFEFD5; -fx-text-fill: black;");
+		      }
 		});
 	}
 
@@ -303,9 +324,24 @@ public class Match4RoundPane extends GridPane {
 			}
 		});
 	}
+	
+	private void playCardFlipSound() {
+		Random random = new Random();
+
+		int whichFlipSound = random.nextInt(3);
+		
+		if(whichFlipSound == 0) {
+			soundPlayer.playSound("snd_cardflip1.wav");
+		} else if(whichFlipSound == 1) {
+			soundPlayer.playSound("snd_cardflip2.wav");
+		} else if(whichFlipSound == 2) {
+			soundPlayer.playSound("snd_cardflip3.wav");
+		}
+	}
 
 	private void flipCardOne() {
 		// (Card One) Changes a card's image to the image on its other side
+		playCardFlipSound();
 		if (clickedCardOne.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardOneIndex)
@@ -326,6 +362,7 @@ public class Match4RoundPane extends GridPane {
 
 	private void flipCardTwo() {
 		// (Card Two) Changes a card's image to the image on its other side
+		playCardFlipSound();
 		if (clickedCardTwo.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardTwoIndex)
@@ -346,6 +383,7 @@ public class Match4RoundPane extends GridPane {
 
 	private void flipCardThree() {
 		// (Card Three) Changes a card's image to the image on its other side
+		playCardFlipSound();
 		if (clickedCardThree.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardThreeIndex)
@@ -366,6 +404,7 @@ public class Match4RoundPane extends GridPane {
 
 	private void flipCardFour() {
 		// (Card Four) Changes a card's image to the image on its other side
+		playCardFlipSound();
 		if (clickedCardFour.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardFourIndex)
@@ -428,6 +467,9 @@ public class Match4RoundPane extends GridPane {
 						&& clickedCardTwo.getName().equals(clickedCardThree.getName())
 						&& clickedCardThree.getName().equals(clickedCardFour.getName())) {
 					// Match confirmed
+					
+					soundPlayer.playSound("snd_carddestroy.wav");
+					
 					// Set card's destroyed flag so it's unclickable
 					curRound.getCard(cardOneIndex).destroyCard();
 					curRound.getCard(cardTwoIndex).destroyCard();
@@ -483,6 +525,7 @@ public class Match4RoundPane extends GridPane {
 			// this.add(scoreMsg, 0, 4);
 			winMsg = new Label("You Win!");
 			this.add(winMsg, 2, 1);
+			soundPlayer.playSound("snd_win.wav");
 		}
 
 		stats.setText("guesses: " + guessCount + "\nscore: " + scoreCount);

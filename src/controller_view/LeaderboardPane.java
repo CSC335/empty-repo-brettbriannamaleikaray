@@ -1,5 +1,6 @@
 package controller_view;
 
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.Account;
 import model.AccountCollection;
+import model.SoundPlayer;
 
 /**
  * A BorderPane that displays a comparison of all users' top scores. Also
@@ -27,6 +29,7 @@ public class LeaderboardPane extends BorderPane {
 	private BorderPane userStatsPane;
 	private Label leaderboardHeaderText;
 	private Button returnToTitleButton;
+	private SoundPlayer soundPlayer;
 
 	/**
 	 * Constructs the LeaderboardPane object
@@ -34,9 +37,10 @@ public class LeaderboardPane extends BorderPane {
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 * @param loginPane  The LoginPane where user accounts are stored
 	 */
-	public LeaderboardPane(MemoryGameGUI memoryGame, LoginPane loginPane) {
+	public LeaderboardPane(MemoryGameGUI memoryGame, LoginPane loginPane, SoundPlayer soundPlayer) {
 		this.memoryGame = memoryGame;
 		this.loginPane = loginPane;
+		this.soundPlayer = soundPlayer;
 		layoutGUI();
 		registerListeners();
 		this.getStylesheets().add("file:src/controller_view/LeaderboardStyle.css");
@@ -50,6 +54,7 @@ public class LeaderboardPane extends BorderPane {
 
 		// Button
 		returnToTitleButton = new Button("Return to Title Screen");
+		returnToTitleButton.setStyle("-fx-background-color: papayawhip; -fx-text-fill: black;");
 
 		// Labels
 		leaderboardHeaderText = new Label("Leaderboard");
@@ -92,7 +97,7 @@ public class LeaderboardPane extends BorderPane {
 		leaderboardTable.setSelectionModel(null);
 
 		// Position leader board
-		leaderboardTable.setMaxHeight(500);
+		leaderboardTable.setMaxHeight(400);
 		leaderboardTable.setPadding(new Insets(25, 100, 50, 100)); // top, right, bottom, left
 
 		// Put user account data into table
@@ -107,6 +112,17 @@ public class LeaderboardPane extends BorderPane {
 	private void registerListeners() {
 		returnToTitleButton.setOnAction(event -> {
 			memoryGame.showTitle();
+			soundPlayer.playSound("snd_button_click.wav");
+		});
+		
+		// Button hover
+		returnToTitleButton.hoverProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean unused, Boolean hover) -> {
+		      if (hover) {
+		    	  returnToTitleButton.setStyle("-fx-background-color: #fdf7ed; -fx-text-fill: black;");
+		    	  soundPlayer.playSound("snd_button_hover.wav");
+		      } else {
+		    	  returnToTitleButton.setStyle("-fx-background-color: #FFEFD5; -fx-text-fill: black;");
+		      }
 		});
 	}
 }

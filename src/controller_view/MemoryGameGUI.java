@@ -1,4 +1,5 @@
 package controller_view;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import model.Account;
 import model.AccountCollection;
 import model.Mode;
+import model.SoundPlayer;
 
 /**
  * Starts the Sonoran Memory Game app. Initially displays a TitlePane that
@@ -32,6 +34,8 @@ public class MemoryGameGUI extends Application {
 	private LoginPane loginPane;
 	private LeaderboardPane leaderboardPane;
 	private Stage stage;
+	private SoundPlayer soundPlayer;
+	private SoundPlayer musicPlayer;
 
 	/**
 	 * The main method
@@ -47,9 +51,14 @@ public class MemoryGameGUI extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		loginPane = new LoginPane(this);
+		soundPlayer = new SoundPlayer(false);
+		musicPlayer = new SoundPlayer(true);
+		loginPane = new LoginPane(this, soundPlayer);
 
-		titlePane = new TitlePane(this, loginPane);
+		// Play title music
+		musicPlayer.playSound("snd_titlemusic.wav");
+
+		titlePane = new TitlePane(this, loginPane, soundPlayer, musicPlayer);
 		pane.setCenter(titlePane);
 
 		Scene scene = new Scene(pane, 1000, 1000);
@@ -72,7 +81,7 @@ public class MemoryGameGUI extends Application {
 	}
 
 	public void setLeaderboardPane(LeaderboardPane leaderboardPane) {
-		leaderboardPane = new LeaderboardPane(this, loginPane);
+		leaderboardPane = new LeaderboardPane(this, loginPane, soundPlayer);
 		this.leaderboardPane = leaderboardPane;
 	}
 
@@ -88,7 +97,7 @@ public class MemoryGameGUI extends Application {
 	 * Goes to the Leaderboard screen by displaying LeaderboardPane
 	 */
 	public void showLeaderboard() {
-		leaderboardPane = new LeaderboardPane(this, loginPane);
+		leaderboardPane = new LeaderboardPane(this, loginPane, soundPlayer);
 		pane.setCenter(leaderboardPane);
 	}
 
@@ -102,13 +111,13 @@ public class MemoryGameGUI extends Application {
 	/**
 	 * Goes to the gameplay screen by displaying RoundPane
 	 * 
-	 * @param mode  the game mode of the round to start
+	 * @param mode the game mode of the round to start
 	 */
 	public void startRound(Mode mode) {
 		if (mode == Mode.NORMAL || mode == Mode.EASY || mode == Mode.TIMED) {
-			pane.setCenter(new RoundPane(this, mode));
+			pane.setCenter(new RoundPane(this, mode, soundPlayer));
 		} else if (mode == Mode.MATCH4) {
-			pane.setCenter(new Match4RoundPane(this, mode));
+			pane.setCenter(new Match4RoundPane(this, mode, soundPlayer));
 		}
 	}
 
@@ -137,7 +146,7 @@ public class MemoryGameGUI extends Application {
 			}
 		}
 	}
-	
+
 	private void closeProgramSteps() {
 		Alert exitAlert = new Alert(AlertType.CONFIRMATION, "Save data?");
 

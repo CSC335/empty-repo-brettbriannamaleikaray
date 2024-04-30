@@ -3,32 +3,27 @@ package controller_view;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Random;
+
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 import model.Card;
 import model.Guess;
 import model.Mode;
 import model.Round;
+import model.SoundPlayer;
 
 /**
  * Starts a new Round of the Memory Game. It first shows 5 card backs that
@@ -39,7 +34,6 @@ import model.Round;
 public class RoundPane extends GridPane {
 
 	private Card nullCard = new Card("null", "null");
-	private Label scoreMsg;
 	private Label gameDoneMsg;
 	private Card clickedCardOne = nullCard;
 	private Card clickedCardTwo = nullCard;
@@ -71,7 +65,7 @@ public class RoundPane extends GridPane {
 	private int cardOneIndex = -1;
 	private int cardTwoIndex = -1;
 	private Button returnToTitle = new Button("Return to Title Screen");
-	private Button leaderBoard = new Button("Show LeaderBoard");
+	private SoundPlayer soundPlayer;
 
 //	private CardSet deck;
 	private String cardBackPath;
@@ -82,16 +76,16 @@ public class RoundPane extends GridPane {
 	// In TimedRound mode, displays the remaining time
 	private Label timerLabel = new Label();
 	AnimationTimer timer;
-	private Label loseMsg;
 
 	/**
 	 * Constructs a new RoundPane
 	 * 
 	 * @param memoryGame The MemoryGameGUI object that controls the GUI
 	 */
-	public RoundPane(MemoryGameGUI memoryGame, Mode mode) {
+	public RoundPane(MemoryGameGUI memoryGame, Mode mode, SoundPlayer soundPlayer) {
 		this.memoryGame = memoryGame;
 		this.mode = mode;
+		this.soundPlayer = soundPlayer;
 		layoutGUI();
 		registerButtons();
 		setMouseHandler();
@@ -127,6 +121,7 @@ public class RoundPane extends GridPane {
 					gameDoneMsg = new Label("YOU LOSE!");
 					RoundPane.this.add(gameDoneMsg, 2, 1);
 					RoundPane.this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
+					soundPlayer.playSound("snd_lose.wav");
 				}
 
 			}
@@ -181,6 +176,7 @@ public class RoundPane extends GridPane {
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_cacti.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -206,6 +202,7 @@ public class RoundPane extends GridPane {
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_cities.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -231,6 +228,7 @@ public class RoundPane extends GridPane {
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_mammals.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -256,6 +254,7 @@ public class RoundPane extends GridPane {
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_mountains.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -281,6 +280,7 @@ public class RoundPane extends GridPane {
 				
 				cardBackPath = "file:src/images/cardbacks/cardback_reptiles.png";
 				makeFullDeck();
+				soundPlayer.playSound("snd_dealcards.wav");
 			}
 
 		});
@@ -292,7 +292,18 @@ public class RoundPane extends GridPane {
 
 	private void registerButtons() {
 		returnToTitle.setOnAction(event -> {
+			soundPlayer.playSound("snd_button_click.wav");
 			memoryGame.showTitle();
+		});
+		
+		//Button hover
+		returnToTitle.hoverProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean unused, Boolean hover) -> {
+		      if (hover) {
+		    	  returnToTitle.setStyle("-fx-background-color: #fdf7ed; -fx-text-fill: black;");
+		    	  soundPlayer.playSound("snd_button_hover.wav");
+		      } else {
+		    	  returnToTitle.setStyle("-fx-background-color: #FFEFD5; -fx-text-fill: black;");
+		      }
 		});
 	}
 
@@ -378,10 +389,26 @@ public class RoundPane extends GridPane {
 		});
 
 	}
+	
+	private void playCardFlipSound() {
+		Random random = new Random();
+
+		int whichFlipSound = random.nextInt(3);
+		
+		if(whichFlipSound == 0) {
+			soundPlayer.playSound("snd_cardflip1.wav");
+		} else if(whichFlipSound == 1) {
+			soundPlayer.playSound("snd_cardflip2.wav");
+		} else if(whichFlipSound == 2) {
+			soundPlayer.playSound("snd_cardflip3.wav");
+		}
+	}
 
 	private void flipCardOne() {
 		// (Card One) Changes a card's image to the image on its other side
-
+		
+		playCardFlipSound();
+		
 		if (clickedCardOne.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardOneIndex)
@@ -404,6 +431,8 @@ public class RoundPane extends GridPane {
 	private void flipCardTwo() {
 		// (Card Two) Changes a card's image to the image on its other side
 
+		playCardFlipSound();
+		
 		if (clickedCardTwo.isFlipped() == false) {
 			// Change to front image
 			cardImages.get(cardTwoIndex)
@@ -464,6 +493,8 @@ public class RoundPane extends GridPane {
 				// see if cards match
 				if (clickedCardOne.getName().equals(clickedCardTwo.getName())) {
 					// Match confirmed
+					
+					soundPlayer.playSound("snd_carddestroy.wav");
 
 					// Set card's destroyed flag so it's unclickable
 					curRound.getCard(cardOneIndex).destroyCard();
@@ -508,6 +539,7 @@ public class RoundPane extends GridPane {
 			// this.add(scoreMsg, 0, 4);
 			gameDoneMsg = new Label("You Win!");
 			this.add(gameDoneMsg, 2, 1);
+			soundPlayer.playSound("snd_win.wav");
 		}
 
 		stats.setText("guesses: " + guessCount + "\nscore: " + scoreCount);
