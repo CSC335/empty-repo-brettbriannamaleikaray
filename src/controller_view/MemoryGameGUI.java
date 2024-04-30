@@ -5,27 +5,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Account;
 import model.AccountCollection;
 import model.Mode;
 import model.SoundPlayer;
 
 /**
- * Starts the Sonoran Memory Game app. Initially displays a TitlePane that
- * displays the title screen. When a user goes to another "screen" (such as the
- * game or leaderboard screens) this class swaps out the currently displayed
- * pane for a pane that displays the desired screen.
+ * Starts the Sonoran Memory Game application. Initially displays the TitlePane, 
+ * which is the home page. When a user clicks to another page (such as the 
+ * LeaderBoardPane) this class swaps out the currently displayed pane for the 
+ * desired one.
  */
 public class MemoryGameGUI extends Application {
 
@@ -114,7 +111,7 @@ public class MemoryGameGUI extends Application {
 	 * @param mode the game mode of the round to start
 	 */
 	public void startRound(Mode mode) {
-		if (mode == Mode.NORMAL || mode == Mode.EASY || mode == Mode.TIMED) {
+		if (mode == Mode.NORMAL || mode == Mode.EASY || mode == Mode.TIMED || mode == Mode.LIMITED) {
 			pane.setCenter(new RoundPane(this, mode, soundPlayer));
 		} else if (mode == Mode.MATCH4) {
 			pane.setCenter(new Match4RoundPane(this, mode, soundPlayer));
@@ -133,7 +130,6 @@ public class MemoryGameGUI extends Application {
 			try {
 				FileInputStream rawBytes = new FileInputStream("objects.ser");
 				ObjectInputStream in = new ObjectInputStream(rawBytes);
-				@SuppressWarnings("unchecked")
 				AccountCollection old = (AccountCollection) in.readObject();
 				loginPane.setAllAccounts(old);
 				in.close();

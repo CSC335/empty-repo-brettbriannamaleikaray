@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
+
 import model.Card;
 import model.Guess;
 import model.Mode;
@@ -67,11 +68,15 @@ public class RoundPane extends GridPane {
 	private Button returnToTitle = new Button("Return to Title Screen");
 	private SoundPlayer soundPlayer;
 
-//	private CardSet deck;
+	// Private CardSet deck;
 	private String cardBackPath;
 	private Round curRound;
 	private MemoryGameGUI memoryGame;
 	private Mode mode;
+	
+	// Specific to Limited Guess Mode
+	private int guessesLeft;
+	private Label guessesLeftLbl;
 
 	// In TimedRound mode, displays the remaining time
 	private Label timerLabel = new Label();
@@ -328,6 +333,13 @@ public class RoundPane extends GridPane {
 			startCountdown();
 		}
 		
+		// Limited Guess Mode
+		if (mode == Mode.LIMITED) {
+			guessesLeft = 3;
+			guessesLeftLbl = new Label("Guesses Left: " + guessesLeft);
+			this.add(guessesLeftLbl, 4, 2);
+		}
+		
 		// add card text label
 		for (int i = 0; i < 16; i += 1) {
 			textLabels[i] = getCardTextLabel(curRound.getCard(i).getName(), 125, 175);
@@ -483,7 +495,7 @@ public class RoundPane extends GridPane {
 		return clickedCard;
 	}
 
-	private void checkCards() {
+	private void checkCards() {	
 		if (curRound.isActive()) {
 			guessCount += 1;
 
@@ -526,17 +538,28 @@ public class RoundPane extends GridPane {
 				}
 			}
 		}
-
-		if (!curRound.isActive()) {
+		
+		if (mode == Mode.LIMITED) {
+			guessesLeft--;
+			guessesLeftLbl.setText("Guesses Left: " + guessesLeft);
+			
+			if (guessesLeft == 0) {
+				curRound.endRound();
+				if (scoreCount == 16) {
+					gameDoneMsg = new Label("You Win!");
+					this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
+					soundPlayer.playSound("snd_win.wav");
+				} else {
+					gameDoneMsg = new Label("You Lose!");
+					soundPlayer.playSound("snd_lose.wav");
+				}
+				this.add(gameDoneMsg, 2, 1);
+			}
+		} else if (!curRound.isActive()) {
 			if(mode == Mode.TIMED)
 				timer.stop();
 			
 			this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
-			// maybe remove this code now that there's a score counter
-			// System.out.println("Game finished");
-			// String score = curRound.getScore().toString();
-			// scoreMsg = new Label("Your score: " + score);
-			// this.add(scoreMsg, 0, 4);
 			gameDoneMsg = new Label("You Win!");
 			this.add(gameDoneMsg, 2, 1);
 			soundPlayer.playSound("snd_win.wav");

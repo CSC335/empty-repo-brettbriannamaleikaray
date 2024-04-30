@@ -26,7 +26,7 @@ public class Table {
 		this.category = category;
 		this.numOfPairs = numOfPairs;
 		this.mode = mode;
-		if (mode == Mode.NORMAL || mode == Mode.TIMED) {
+		if (mode == Mode.NORMAL || mode == Mode.TIMED || mode == Mode.LIMITED) {
 			randomizedCards = new Card[numOfPairs*2];
 		} else if (mode == mode.EASY || mode == Mode.MATCH4) {
 			randomizedCards = new Card[numOfPairs*4];
@@ -48,7 +48,7 @@ public class Table {
 		// if match 4 mode adds 4 of each random card to the randomCards array
 		for (int i = 0; i < numOfPairs; i++) {
 			Card card = tempCards.get(i);
-			if (mode == Mode.NORMAL || mode == Mode.TIMED) {
+			if (mode == Mode.NORMAL || mode == Mode.TIMED || mode == Mode.LIMITED) {
 				randomizedCards[i*2] = new Card(card.getName(), card.getFileName());
 				randomizedCards[i*2+1] = new Card(card.getName(), card.getFileName());
 			} else if (mode == Mode.EASY || mode == Mode.MATCH4){

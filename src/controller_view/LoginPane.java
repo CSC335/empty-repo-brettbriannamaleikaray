@@ -59,6 +59,8 @@ public class LoginPane extends GridPane {
 		loginBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
 		createAccountBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
 		logoutBtn.setStyle("-fx-background-color: peachpuff; -fx-text-fill: black;");
+		usernameLbl.setStyle("-fx-text-fill: white;");
+		passwordLbl.setStyle("-fx-text-fill: white;");
 		
 		this.add(usernameLbl, 0, 0);
 		this.add(usernameFld, 1, 0);
