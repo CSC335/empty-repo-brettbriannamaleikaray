@@ -338,7 +338,7 @@ public class RoundPane extends GridPane {
 		
 		// Limited Guess Mode
 		if (mode == Mode.LIMITED) {
-			guessesLeft = 3;
+			guessesLeft = 15;
 			guessesLeftLbl = new Label("Guesses Left: " + guessesLeft);
 			this.add(guessesLeftLbl, 4, 2);
 		}
@@ -567,6 +567,7 @@ public class RoundPane extends GridPane {
 			this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
 			gameDoneMsg = new Label("You Win!");
 			this.add(gameDoneMsg, 2, 1);
+			finalScore = new Label("Final Score: " + scoreCount);
 			this.add(finalScore, 2, 2);
 			soundPlayer.playSound("snd_win.wav");
 		}

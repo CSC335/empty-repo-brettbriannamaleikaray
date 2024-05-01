@@ -68,7 +68,7 @@ public class TitlePane extends BorderPane {
 
 		// Style buttons
 		String btnStyle = "-fx-background-color: papayawhip; "
-						+ "-fx-text-fill: black; ";
+				+ "-fx-text-fill: black; ";
 		startButton.setStyle(btnStyle);
 		startEasyButton.setStyle(btnStyle);
 		startTimedButton.setStyle(btnStyle);
@@ -85,7 +85,7 @@ public class TitlePane extends BorderPane {
 		buttons.add(startLimitedButton, 0, 4);
 		buttons.add(leaderboardButton, 0, 5);
 		buttons.add(quitButton, 0, 6);
-		
+
 		// Set button width
 		int btnPrefWidth = 500;
 		startButton.setPrefWidth(btnPrefWidth);
@@ -219,6 +219,18 @@ public class TitlePane extends BorderPane {
 						soundPlayer.playSound("snd_button_hover.wav");
 					} else {
 						startMatch4Button.setStyle(
+								"-fx-background-color: #FFEFD5; -fx-text-fill: black;");
+					}
+				});
+		startLimitedButton.hoverProperty()
+				.addListener((ObservableValue<? extends Boolean> obs,
+						Boolean unused, Boolean hover) -> {
+					if (hover) {
+						startEasyButton.setStyle(
+								"-fx-background-color: #fdf7ed; -fx-text-fill: black;");
+						soundPlayer.playSound("snd_button_hover.wav");
+					} else {
+						startEasyButton.setStyle(
 								"-fx-background-color: #FFEFD5; -fx-text-fill: black;");
 					}
 				});
