@@ -97,8 +97,8 @@ public class LeaderboardPane extends BorderPane {
 		leaderboardTable.setSelectionModel(null);
 
 		// Position leader board
-		leaderboardTable.setMaxHeight(400);
-		leaderboardTable.setPadding(new Insets(25, 100, 50, 100)); // top, right, bottom, left
+		leaderboardTable.setMaxHeight(340);
+		leaderboardTable.setPadding(new Insets(0, 100, 0, 100)); // top, right, bottom, left
 
 		// Put user account data into table
 		AccountCollection allAccounts = loginPane.getAllAccounts();
