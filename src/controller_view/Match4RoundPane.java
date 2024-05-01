@@ -494,7 +494,7 @@ public class Match4RoundPane extends GridPane {
 					this.getChildren().remove(textLabels[cardFourIndex]);
 
 					// Increase score
-					scoreCount += 1;
+					scoreCount += 2;
 
 				} else {
 					// No match
@@ -524,7 +524,9 @@ public class Match4RoundPane extends GridPane {
 			// scoreMsg = new Label("Your score: " + score);
 			// this.add(scoreMsg, 0, 4);
 			winMsg = new Label("You Win!");
+			Label finalScore = new Label("Final Score: " + scoreCount);
 			this.add(winMsg, 2, 1);
+			this.add(finalScore, 2, 2);
 			soundPlayer.playSound("snd_win.wav");
 		}
 

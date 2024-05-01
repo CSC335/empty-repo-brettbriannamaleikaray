@@ -67,6 +67,7 @@ public class RoundPane extends GridPane {
 	private int cardTwoIndex = -1;
 	private Button returnToTitle = new Button("Return to Title Screen");
 	private SoundPlayer soundPlayer;
+	private Label finalScore;
 
 	// Private CardSet deck;
 	private String cardBackPath;
@@ -123,8 +124,10 @@ public class RoundPane extends GridPane {
 						RoundPane.this.getChildren().removeAll();
 					}
 
+					finalScore = new Label("Final Score: " + scoreCount);
 					gameDoneMsg = new Label("YOU LOSE!");
 					RoundPane.this.add(gameDoneMsg, 2, 1);
+					RoundPane.this.add(finalScore, 2, 2);
 					RoundPane.this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
 					soundPlayer.playSound("snd_lose.wav");
 				}
@@ -545,6 +548,7 @@ public class RoundPane extends GridPane {
 			
 			if (guessesLeft == 0) {
 				curRound.endRound();
+				finalScore = new Label("Final Score: " + scoreCount);
 				if (scoreCount == 16) {
 					gameDoneMsg = new Label("You Win!");
 					this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
@@ -554,6 +558,7 @@ public class RoundPane extends GridPane {
 					soundPlayer.playSound("snd_lose.wav");
 				}
 				this.add(gameDoneMsg, 2, 1);
+				this.add(finalScore, 2, 2);
 			}
 		} else if (!curRound.isActive()) {
 			if(mode == Mode.TIMED)
@@ -562,6 +567,7 @@ public class RoundPane extends GridPane {
 			this.memoryGame.getLoginPane().getCurrentAccount().addRound(curRound);
 			gameDoneMsg = new Label("You Win!");
 			this.add(gameDoneMsg, 2, 1);
+			this.add(finalScore, 2, 2);
 			soundPlayer.playSound("snd_win.wav");
 		}
 

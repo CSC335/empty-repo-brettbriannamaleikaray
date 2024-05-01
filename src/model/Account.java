@@ -87,7 +87,9 @@ public class Account implements Serializable {
 			return 0;
 		}
 		
-		return sum / roundHistory.size();
+		double avgScore = (Math.round((sum / roundHistory.size()) * 100.0) / 100.0);
+		avgScore = (int) (avgScore * 100);
+		return avgScore;
 	}
 
 	/**
@@ -106,6 +108,9 @@ public class Account implements Serializable {
 		if(highestScore == Double.NEGATIVE_INFINITY) {
 			return 0;
 		}
+		
+		highestScore = (Math.round(highestScore * 100.0) / 100.0);
+		highestScore = (int) (highestScore * 100);
 		
 		return highestScore;
 	}

@@ -106,6 +106,8 @@ public class LeaderboardPane extends BorderPane {
 			leaderboardTable.getItems().add(allAccounts.get(i));
 		}
 
+		highestScoreColumn.setSortType(TableColumn.SortType.DESCENDING);
+		averageScoreColumn.setSortType(TableColumn.SortType.DESCENDING);
 		return leaderboardTable;
 	}
 
