@@ -131,7 +131,7 @@ public class Round implements Serializable {
 	/**
 	 * Sets the score. Used for hardcoded accounts.
 	 * 
-	 * @param score The score for this round
+	 * @param numOfMatches The score for this round
 	 */
 	public void setNumOfMatches(int numOfMatches) {
 		this.numOfMatches = numOfMatches;

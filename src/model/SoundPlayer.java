@@ -40,7 +40,7 @@ public class SoundPlayer {
 	/**
 	 * Adds a Sound object to the soundCollection ArrayList
 	 * 
-	 * @param sound the Sound object to be added to soundCollection
+	 * @param soundName the Sound object to be added to soundCollection
 	 */
 	public void addSound(String soundName) {
 		soundCollection.add(new Sound(soundName));

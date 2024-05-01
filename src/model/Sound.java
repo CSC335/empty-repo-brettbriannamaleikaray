@@ -14,7 +14,6 @@ public class Sound {
 	 * 
 	 * @param name     The name of the mp3/wav file including the extension
 	 *                 (example: "thisSound.wav")
-	 * @param fileName The file path of the sound file in the project
 	 */
 	public Sound(String name) {
 		this.name = name;
